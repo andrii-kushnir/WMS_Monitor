@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WMS_Monitor.Model
 {
-    public class Nakladna
+    public class NakladnaWMS
     {
         public int Coden { get; set; }
         public string PlaceWMS { get; set; }
@@ -20,6 +20,7 @@ namespace WMS_Monitor.Model
         public string NameDoc { get; set; }
         public TimeSpan Timer { get; set; }
         public bool Sound { get; set; }
+        public double Waiting { get; set; }
     }
 
     public enum NaklType

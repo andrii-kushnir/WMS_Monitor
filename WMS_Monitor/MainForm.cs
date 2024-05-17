@@ -27,10 +27,11 @@ namespace WMS_Monitor
         private int kKIM = 0;
 
         private Dictionary<string, KomirkaVisual> ListKomirka = new Dictionary<string, KomirkaVisual>();
-        private List<Nakladna> ListNakladna = new List<Nakladna>();
+        private List<NakladnaWMS> ListNakladna = new List<NakladnaWMS>();
+        private List<Discharge> ListDischarge = new List<Discharge>();
 
         private readonly System.Threading.Timer _timer;
-        private const int intervalUpdate = 15 * 1000;
+        private const int intervalUpdate = 20 * 1000;
         private DateTime lastExecute = DateTime.MinValue;
 
         //private readonly System.Threading.Timer _timerBlinking;
@@ -43,7 +44,6 @@ namespace WMS_Monitor
             _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 0, intervalUpdate);
             //_timerBlinking = new System.Threading.Timer(new TimerCallback(OnTimerBlink), null, 2000, 300);
 
-            _naklGrid.DefaultCellStyle.Font = new Font("Times New Roman", 18, FontStyle.Bold);
             _naklGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             _naklGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
@@ -51,8 +51,9 @@ namespace WMS_Monitor
         private void UpdateMonitor(object obj)
         {
             UpdateFromBD();
-            UpdateTiming();
-            ShowDouble();
+            UpdateTimingDischarge();
+            UpdateTimingNakl();
+            //ShowDouble();
         }
 
         private void OnTimerBlink(object obj)
@@ -98,7 +99,7 @@ namespace WMS_Monitor
                             var place = Convert.ToString(reader["place"]);
                             if (ListKomirka.ContainsKey(place))
                             {
-                                nakl = new Nakladna
+                                nakl = new NakladnaWMS
                                 {
                                     Coden = coden,
                                     PlaceWMS = place,
@@ -108,6 +109,7 @@ namespace WMS_Monitor
                                     Dostavka = reader["codepdost"] == System.DBNull.Value ? 0 : Convert.ToInt32(reader["codepdost"]),
                                     NameDoc = reader["NameDoc"] == System.DBNull.Value ? "" : Convert.ToString(reader["NameDoc"])
                                 };
+                                if ((DateTime.Now - nakl.DateOpen).TotalHours > 72) continue;
                                 switch (nakl.NameDoc)
                                 {
                                     case "":
@@ -142,8 +144,10 @@ namespace WMS_Monitor
                                         break;
                                     case "Внутрішній прихід":
                                         nakl.Type = NaklType.VnPr;
+                                        //ListNakladna.Add(nakl);
                                         break;
                                     case "Прихід від постачальника":
+                                        //Приходи обробляються через Discharge
                                         nakl.Type = NaklType.Post;
                                         break;
                                     default:
@@ -171,20 +175,52 @@ namespace WMS_Monitor
                             nakl.DateClose = close;
 
                             var komirka = ListKomirka[nakl.PlaceWMS];
-                            //if (close > komirka.LastChange)
-                            //{
-                                komirka.blink = false;
-                                this.Invoke(new Action(() =>
-                                {
-                                    komirka.Text.Visible = false;
-                                    komirka.Picture.Visible = false;
-                                }));
-                            //    komirka.LastChange = close;
-                            //}
-
+                            komirka.blink = false;
+                            this.Invoke(new Action(() =>
+                            {
+                                komirka.Text.Visible = false;
+                                komirka.Number.BackColor = Color.White;
+                                //komirka.Picture.Visible = false;
+                            }));
                             ListNakladna.Remove(nakl);
                         }
                     }
+
+                    var newListDischarge = new List<Discharge>();
+                    reader.NextResult();
+                    while (reader.Read())
+                    {
+                        var place = Convert.ToString(reader["place"]);
+                        if (ListKomirka.ContainsKey(place))
+                        {
+                            var nakl = new Discharge()
+                            {
+                                Coden = Convert.ToInt32(reader["coden"]),
+                                PlaceWMS = place,
+                                PlaceERP = Convert.ToString(reader["nameERP"]),
+                                DateOpen = Convert.ToDateTime(reader["dateOpen"]),
+                                DischargeCode = Convert.ToInt32(reader["discharge"])
+                            };
+                            newListDischarge.Add(nakl);
+
+                            if (!ListDischarge.Exists(n => n.Coden == nakl.Coden))
+                                ListDischarge.Add(nakl);
+                        }
+                    }
+                    foreach(var nakl in ListDischarge.ToList())
+                    {
+                        if (!newListDischarge.Exists(n => n.Coden == nakl.Coden))
+                        {
+                            var komirka = ListKomirka[nakl.PlaceWMS];
+                            this.Invoke(new Action(() =>
+                            {
+                                komirka.Text.Visible = false;
+                                komirka.Number.BackColor = Color.White;
+                            }));
+                            ListDischarge.Remove(nakl);
+                        }
+                    }
+                    newListDischarge.Clear();
                 }
                 catch (Exception ex)
                 {
@@ -198,94 +234,184 @@ namespace WMS_Monitor
             }
         }
 
-        private void UpdateTiming()
+        private void UpdateTimingDischarge()
         {
-            ListNakladna = ListNakladna.OrderByDescending(n => n.DateOpen).ToList();
-            this.Invoke(new Action(() =>
+            ListDischarge = ListDischarge.OrderByDescending(n => n.DateOpen).ToList();
+            foreach (var nakl in ListDischarge)
             {
-                _naklGrid.DataSource = ListNakladna.Where(n => n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP).Select(n => new { NameDoc = n.NameDoc, Coden = n.Coden, Place = n.PlaceERP, Date = n.DateOpen }).OrderBy(n => n.Date).ToList();
-            }));
+                var komirka = ListKomirka[nakl.PlaceWMS];
+                nakl.Timer = DateTime.Now - nakl.DateOpen;
+                var textTimer = (nakl.Timer.TotalMinutes < 60) ? $"{(int)nakl.Timer.TotalMinutes}хв" : $"{(int)nakl.Timer.TotalHours}гд";
+                if (!komirka.Text.Visible)
+                    this.Invoke(new Action(() =>
+                        {
+                            komirka.Text.Visible = true;
+                        }));
+                this.Invoke(new Action(() =>
+                {
+                    komirka.Text.Text = $"Постач {nakl.DischargeCode} ⌚{nakl.Timer.ToString(@"hh\:mm")}";
+                }));
+
+                nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
+
+                if (nakl.Waiting < 1)
+                {
+                    if (komirka.Text.BackColor != Color.White)
+                        this.Invoke(new Action(() =>
+                        {
+                            komirka.Text.BackColor = Color.White;
+                        }));
+                }
+                else
+                {
+                    if (komirka.Number.BackColor != Color.DarkGray)
+                        this.Invoke(new Action(() =>
+                        {
+                            komirka.Number.BackColor = Color.DarkGray;
+                        }));
+                    if (komirka.Text.BackColor != Color.DarkGray)
+                        this.Invoke(new Action(() =>
+                        {
+                            komirka.Text.BackColor = Color.DarkGray;
+                        }));
+                    this.Invoke(new Action(() =>
+                        {
+                            if (!nakl.Sound && nakl.PlaceWMS == "ENT.59")
+                            {
+                                (new SoundPlayer("59.wav")).Play();
+                                nakl.Sound = true;
+                            }
+                            if (!nakl.Sound && nakl.PlaceWMS == "ENT.58")
+                            {
+                                (new SoundPlayer("58.wav")).Play();
+                                nakl.Sound = true;
+                            }
+                        }));
+                }
+            }
+        }
+
+        private void UpdateTimingNakl()
+        {
+            ListNakladna = ListNakladna.OrderByDescending(n => n.DateOpen).ToList(); /*.ThenBy(n => n.FirstName)*/
             foreach (var nakl in ListNakladna)
             {
                 var komirka = ListKomirka[nakl.PlaceWMS];
                 nakl.Timer = DateTime.Now - nakl.DateOpen;
+                var textTimer = (nakl.Timer.TotalMinutes < 100) ? $"{(int)nakl.Timer.TotalMinutes}хв": $"{(int)nakl.Timer.TotalHours}гд";
                 this.Invoke(new Action(() =>
                 {
-                    //komirka.Text.Text = $"ПокупМП {nakl.Coden} ⌚{nakl.Timer.ToString(@"h\:mm")}";
                     switch (nakl.Type)
                     {
                         case NaklType.PokCM:
-                            komirka.Text.Text = $"ПокупСМ {nakl.Coden}   {(int)nakl.Timer.TotalMinutes}хв";
+                            komirka.Text.Text = $"ПокупСМ {nakl.Coden} {textTimer}";
                             break;
                         case NaklType.Zbut:
-                            komirka.Text.Text = $"Збут {nakl.Coden}      {(int)nakl.Timer.TotalMinutes}хв";
+                            komirka.Text.Text = $"Збут   {nakl.Coden}  {textTimer}";
                             break;
                         case NaklType.MP:
-                            komirka.Text.Text = $"ПокупМП {nakl.Coden}   {(int)nakl.Timer.TotalMinutes}хв";
+                            komirka.Text.Text = $"ПокупМП {nakl.Coden} {textTimer}";
                             break;
                         case NaklType.TerCM:
-                            komirka.Text.Text = $"ТернСМ {nakl.Coden} ⌚{nakl.Timer.ToString(@"hh\:mm")}";
+                            komirka.Text.Text = $"ТернСМ {nakl.Coden} {nakl.Timer.ToString(@"hh\:mm")}";
                             break;
                         case NaklType.Filii:
-                            komirka.Text.Text = $"Доставка {nakl.Dostavka} {(int)nakl.Timer.TotalHours}год";
+                            komirka.Text.Text = $"Доставка {nakl.Dostavka} {textTimer}";
+                            break;
+                        case NaklType.Post:
+                            komirka.Text.Text = $"Постач  {nakl.Coden} {textTimer}";
                             break;
                     }
-                    komirka.Text.Visible = true;
-                    komirka.Picture.Visible = true;
                 }));
+                if (!komirka.Text.Visible)
+                    this.Invoke(new Action(() =>
+                    {
+                        komirka.Text.Visible = true;
+                    }));
+                if (komirka.Text.BackColor != Color.White)
+                    this.Invoke(new Action(() =>
+                    {
+                        komirka.Text.BackColor = Color.White;
+                    }));
 
-                Double waiting = 0;
+                if (nakl.PlaceWMS == "ENT.MP" || nakl.PlaceWMS == "ENT.CM1" || nakl.PlaceWMS == "ENT.CM2" || nakl.PlaceWMS == "ENT.CM3" || nakl.Type == NaklType.Post || nakl.Type == NaklType.Filii)
+                {
+                    if (komirka.Number.BackColor != Color.White)
+                        this.Invoke(new Action(() =>
+                        {
+                            komirka.Number.BackColor = Color.White;
+                        }));
+                    continue;
+                }
+
                 switch (nakl.Type)
                 {
                     case NaklType.PokCM:
                     case NaklType.Zbut:
                     case NaklType.MP:
-                        waiting = nakl.Timer.TotalSeconds / timeWaiting15;
+                        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting15;
                         break;
                     case NaklType.TerCM:
                     case NaklType.Filii:
-                        waiting = nakl.Timer.TotalSeconds / timeWaiting120;
+                        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
+                        break;
+                    case NaklType.Post:
+                        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
                         break;
                 }
-                if (waiting < 0) waiting = 0;
-                if (waiting < 0.66)
+                if (nakl.Waiting < 0) nakl.Waiting = 0;
+                if (nakl.Waiting < 0.66)
                     this.Invoke(new Action(() =>
                     {
                         //int red = (int)(waiting * 255);
                         //int green = (int)(255 - (waiting * 255));
-                        komirka.Picture.BackColor = Color.FromArgb(0, 255, 0);
+                        //komirka.Picture.BackColor = Color.FromArgb(0, 255, 0);
+                        komirka.Number.BackColor = Color.FromArgb(0, 255, 0);
+                        komirka.Text.BackColor = Color.FromArgb(0, 255, 0);
                     }));
                 else
                 {
-                    if (waiting < 1)
+                    if (nakl.Waiting < 1)
                         this.Invoke(new Action(() =>
                         {
-                            komirka.Picture.BackColor = Color.FromArgb(255, 255, 0);
+                            //komirka.Picture.BackColor = Color.FromArgb(255, 255, 0);
+                            komirka.Number.BackColor = Color.FromArgb(255, 255, 0);
+                            komirka.Text.BackColor = Color.FromArgb(255, 255, 0);
                         }));
                     else
                         this.Invoke(new Action(() =>
                         {
-                            komirka.Picture.BackColor = Color.FromArgb(255, 0, 0);
+                            //komirka.Picture.BackColor = Color.FromArgb(255, 0, 0);
+                            komirka.Number.BackColor = Color.FromArgb(255, 0, 0);
+                            komirka.Text.BackColor = Color.FromArgb(255, 0, 0);
                             if (!nakl.Sound && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
                             {
                                 (new SoundPlayer("Long.wav")).Play();
                                 nakl.Sound = true;
                             }
-                            //if (nakl.Place == "EXI.KIM" && kKIM < 5)
-                            //{
-                            //    (new SoundPlayer("KIM.wav")).Play();
-                            //    kKIM++;
-                            //}
-                            //if (nakl.Place == "EXI.LAV" && kLAV < 5)
-                            //{
-                            //    (new SoundPlayer("LAV.wav")).Play();
-                            //    kLAV++;
-                            //}
                         }));
                 }
                 //if (waiting > 1.4)
                 //    komirka.blink = true;
             }
+
+            this.Invoke(new Action(() =>
+            {
+                var grid = ListNakladna.Where(n => (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP) && n.PlaceWMS != "ENT.MP").Select(n => new { Тип_документа = n.NameDoc, Накладна = n.Coden, Місце = n.PlaceERP.Substring(0, Math.Min(9, n.PlaceERP.Length)), Час = n.DateOpen.ToString("HH:mm") }).OrderBy(n => n.Час).ToList();
+                _naklGrid.DataSource = grid;
+                foreach (DataGridViewRow row in _naklGrid.Rows)
+                {
+                    var waiting = ListNakladna.Find(n => n.Coden == grid[row.Index].Накладна).Waiting;
+                    if (waiting < 0.66)
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(0, 255, 0);
+                    else if (waiting < 1)
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 0);
+                    else
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
+                }
+                _naklGrid.ClearSelection();
+                _naklGrid.CurrentCell = null;
+            }));
         }
 
         private void ShowDouble()
@@ -310,11 +436,6 @@ namespace WMS_Monitor
             {
                 box.CreateGraphics().DrawString(count.ToString(), myFont, Brushes.White, new Point(16, -4));
             }
-        }
-
-        private void CountClear(PictureBox box)
-        {
-            box.Image = car;
         }
 
         private void KomirkaInit()
@@ -545,7 +666,7 @@ namespace WMS_Monitor
                 Text = this._lText31
             };
             komirka31.Picture.Image = car;
-            ListKomirka.Add("EXI.31", komirka31);
+            ListKomirka.Add("ENT.31", komirka31);
             var komirka32 = new KomirkaVisual()
             {
                 Number = this._lKomirka32,
@@ -553,7 +674,7 @@ namespace WMS_Monitor
                 Text = this._lText32
             };
             komirka32.Picture.Image = car;
-            ListKomirka.Add("EXI.32", komirka32);
+            ListKomirka.Add("ENT.32", komirka32);
             var komirka33 = new KomirkaVisual()
             {
                 Number = this._lKomirka33,
@@ -561,7 +682,7 @@ namespace WMS_Monitor
                 Text = this._lText33
             };
             komirka33.Picture.Image = car;
-            ListKomirka.Add("EXI.33", komirka33);
+            ListKomirka.Add("ENT.33", komirka33);
             var komirka34 = new KomirkaVisual()
             {
                 Number = this._lKomirka34,
@@ -569,7 +690,7 @@ namespace WMS_Monitor
                 Text = this._lText34
             };
             komirka34.Picture.Image = car;
-            ListKomirka.Add("EXI.34", komirka34);
+            ListKomirka.Add("ENT.34", komirka34);
             var komirka35 = new KomirkaVisual()
             {
                 Number = this._lKomirka35,
@@ -577,7 +698,7 @@ namespace WMS_Monitor
                 Text = this._lText35
             };
             komirka35.Picture.Image = car;
-            ListKomirka.Add("EXI.35", komirka35);
+            ListKomirka.Add("ENT.35", komirka35);
             var komirka36 = new KomirkaVisual()
             {
                 Number = this._lKomirka36,
@@ -585,7 +706,7 @@ namespace WMS_Monitor
                 Text = this._lText36
             };
             komirka36.Picture.Image = car;
-            ListKomirka.Add("EXI.36", komirka36);
+            ListKomirka.Add("ENT.36", komirka36);
 
             var komirka55 = new KomirkaVisual()
             {
@@ -594,7 +715,7 @@ namespace WMS_Monitor
                 Text = this._lText55
             };
             komirka55.Picture.Image = car;
-            ListKomirka.Add("EXI.55", komirka55);
+            ListKomirka.Add("ENT.55", komirka55);
             var komirka56 = new KomirkaVisual()
             {
                 Number = this._lKomirka56,
@@ -602,7 +723,7 @@ namespace WMS_Monitor
                 Text = this._lText56
             };
             komirka56.Picture.Image = car;
-            ListKomirka.Add("EXI.56", komirka56);
+            ListKomirka.Add("ENT.56", komirka56);
             var komirka57 = new KomirkaVisual()
             {
                 Number = this._lKomirka57,
@@ -610,7 +731,7 @@ namespace WMS_Monitor
                 Text = this._lText57
             };
             komirka57.Picture.Image = car;
-            ListKomirka.Add("EXI.57", komirka57);
+            ListKomirka.Add("ENT.57", komirka57);
             var komirka58 = new KomirkaVisual()
             {
                 Number = this._lKomirka58,
@@ -618,7 +739,7 @@ namespace WMS_Monitor
                 Text = this._lText58
             };
             komirka58.Picture.Image = car;
-            ListKomirka.Add("EXI.58", komirka58);
+            ListKomirka.Add("ENT.58", komirka58);
             var komirka59 = new KomirkaVisual()
             {
                 Number = this._lKomirka59,
@@ -626,7 +747,7 @@ namespace WMS_Monitor
                 Text = this._lText59
             };
             komirka59.Picture.Image = car;
-            ListKomirka.Add("EXI.59", komirka59);
+            ListKomirka.Add("ENT.59", komirka59);
             var komirka60 = new KomirkaVisual()
             {
                 Number = this._lKomirka60,
@@ -634,7 +755,7 @@ namespace WMS_Monitor
                 Text = this._lText60
             };
             komirka60.Picture.Image = car;
-            ListKomirka.Add("EXI.60", komirka60);
+            ListKomirka.Add("ENT.60", komirka60);
             var komirka61 = new KomirkaVisual()
             {
                 Number = this._lKomirka61,
@@ -642,7 +763,7 @@ namespace WMS_Monitor
                 Text = this._lText61
             };
             komirka61.Picture.Image = car;
-            ListKomirka.Add("EXI.61", komirka61);
+            ListKomirka.Add("ENT.61", komirka61);
             var komirka62 = new KomirkaVisual()
             {
                 Number = this._lKomirka62,
@@ -650,7 +771,7 @@ namespace WMS_Monitor
                 Text = this._lText62
             };
             komirka62.Picture.Image = car;
-            ListKomirka.Add("EXI.62", komirka62);
+            ListKomirka.Add("ENT.62", komirka62);
 
             var komirka101 = new KomirkaVisual()
             {
@@ -659,7 +780,7 @@ namespace WMS_Monitor
                 Text = this._lText101
             };
             komirka101.Picture.Image = car;
-            ListKomirka.Add("EXI.101", komirka101);
+            ListKomirka.Add("ENT.101", komirka101);
             var komirka102 = new KomirkaVisual()
             {
                 Number = this._lKomirka102,
@@ -667,7 +788,7 @@ namespace WMS_Monitor
                 Text = this._lText102
             };
             komirka102.Picture.Image = car;
-            ListKomirka.Add("EXI.102", komirka102);
+            ListKomirka.Add("ENT.102", komirka102);
 
             var komirkaB2 = new KomirkaVisual()
             {
@@ -700,7 +821,7 @@ namespace WMS_Monitor
                 Text = this._lTextMP
             };
             komirkaMP.Picture.Image = car;
-            ListKomirka.Add("EXI.MP", komirkaMP);
+            ListKomirka.Add("ENT.MP", komirkaMP);
             var komirkaCM1 = new KomirkaVisual()
             {
                 Number = this._lKomirkaCM1,
@@ -708,7 +829,7 @@ namespace WMS_Monitor
                 Text = this._lTextCM1
             };
             komirkaCM1.Picture.Image = car;
-            ListKomirka.Add("EXI.CM1", komirkaCM1);
+            ListKomirka.Add("ENT.CM1", komirkaCM1);
             var komirkaCM2 = new KomirkaVisual()
             {
                 Number = this._lKomirkaCM2,
@@ -716,7 +837,7 @@ namespace WMS_Monitor
                 Text = this._lTextCM2
             };
             komirkaCM2.Picture.Image = car;
-            ListKomirka.Add("EXI.CM2", komirkaCM2);
+            ListKomirka.Add("ENT.CM2", komirkaCM2);
             var komirkaCM3 = new KomirkaVisual()
             {
                 Number = this._lKomirkaCM3,
@@ -724,7 +845,7 @@ namespace WMS_Monitor
                 Text = this._lTextCM3
             };
             komirkaCM3.Picture.Image = car;
-            ListKomirka.Add("EXI.CM3", komirkaCM3);
+            ListKomirka.Add("ENT.CM3", komirkaCM3);
             var komirkaHOL = new KomirkaVisual()
             {
                 Number = this._lKomirkaHOL,
