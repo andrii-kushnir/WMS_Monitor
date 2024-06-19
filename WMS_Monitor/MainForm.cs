@@ -16,36 +16,61 @@ namespace WMS_Monitor
 {
     public partial class MainForm : Form
     {
-        private const string connectionSql101 = @"Server=192.168.4.101; Database=erp; uid=КушнірА; pwd=зщшфтв;";
+        private bool _operatorMode = false;
 
         private Image car = Image.FromFile("car.png");
         private Image shopping = Image.FromFile("shopping.png");
         private const int timeWaiting15 = 15 * 60;
         private const int timeWaiting120 = 120 * 60;
 
-        private int kLAV = 0;
-        private int kKIM = 0;
-
         private Dictionary<string, KomirkaVisual> ListKomirka = new Dictionary<string, KomirkaVisual>();
         private List<NakladnaWMS> ListNakladna = new List<NakladnaWMS>();
         private List<Discharge> ListDischarge = new List<Discharge>();
+        private List<NakladnaWMS> ErrorNakladna = new List<NakladnaWMS>();
 
-        private readonly System.Threading.Timer _timer;
+        private System.Threading.Timer _timer;
         private const int intervalUpdate = 20 * 1000;
         private DateTime lastExecute = DateTime.MinValue;
+
+        private System.Windows.Forms.Timer timerRefresh = new System.Windows.Forms.Timer();
+        private DateTime _startTime = DateTime.Now.AddSeconds(-119);
 
         //private readonly System.Threading.Timer _timerBlinking;
 
         public MainForm()
         {
+            InitializeDefault();
+        }
+
+        public MainForm(bool operatorMode)
+        {
+            _operatorMode = operatorMode;
+            InitializeDefault();
+        }
+
+        private void InitializeDefault()
+        {
             InitializeComponent();
             KomirkaInit();
 
-            _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 0, intervalUpdate);
-            //_timerBlinking = new System.Threading.Timer(new TimerCallback(OnTimerBlink), null, 2000, 300);
-
-            _naklGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            _naklGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             _naklGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+            _problemGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            _problemGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+            if (_operatorMode)
+            {
+                _bRefresh.Visible = true;
+                this.timerRefresh.Enabled = true;
+                this.timerRefresh.Interval = 1000;
+                this.timerRefresh.Tick += new System.EventHandler(timerRefresh_Tick);
+            }
+            else
+            {
+                _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 0, intervalUpdate);
+                //_timerBlinking = new System.Threading.Timer(new TimerCallback(OnTimerBlink), null, 2000, 300);
+            }
         }
 
         private void UpdateMonitor(object obj)
@@ -54,6 +79,7 @@ namespace WMS_Monitor
             UpdateTimingDischarge();
             UpdateTimingNakl();
             //ShowDouble();
+            ShowErrorNakl();
         }
 
         private void OnTimerBlink(object obj)
@@ -72,7 +98,7 @@ namespace WMS_Monitor
 
         private void UpdateFromBD()
         {
-            using (var connection = new SqlConnection(connectionSql101))
+            using (var connection = new SqlConnection(Program.connectionSql101))
             {
                 string query;
                 if (lastExecute == DateTime.MinValue)
@@ -93,10 +119,13 @@ namespace WMS_Monitor
                     while (reader.Read())
                     {
                         var coden = Convert.ToInt32(reader["coden"]);
+                        ErrorNakladna.RemoveAll(n => n.Coden == coden);
                         var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden);
                         if (nakl == null)
                         {
                             var place = Convert.ToString(reader["place"]);
+                            if (String.IsNullOrWhiteSpace(place))
+                                continue;
                             if (ListKomirka.ContainsKey(place))
                             {
                                 nakl = new NakladnaWMS
@@ -112,50 +141,44 @@ namespace WMS_Monitor
                                 if ((DateTime.Now - nakl.DateOpen).TotalHours > 72) continue;
                                 switch (nakl.NameDoc)
                                 {
-                                    case "":
-                                        nakl.Type = NaklType.Empty;
-                                        break;
                                     case "Покупець СМ":
                                         nakl.Type = NaklType.PokCM;
-                                        ListNakladna.Add(nakl);
                                         break;
                                     case "Тернопіль СМ":
                                         nakl.Type = NaklType.TerCM;
-                                        ListNakladna.Add(nakl);
-                                        break;
-                                    case "Господарські витрати":
-                                        nakl.Type = NaklType.Gosp;
                                         break;
                                     case "Збут":
                                         nakl.Type = NaklType.Zbut;
-                                        ListNakladna.Add(nakl);
-                                        break;
-                                    case "Повернення покупців":
-                                        nakl.Type = NaklType.Povern;
                                         break;
                                     case "Покупець Маркетплейс":
                                         nakl.Type = NaklType.MP;
                                         nakl.NameDoc = "Покупець МП";
-                                        ListNakladna.Add(nakl);
                                         break;
                                     case "Філії":
                                         nakl.Type = NaklType.Filii;
-                                        ListNakladna.Add(nakl);
                                         break;
+
+                                    case "":
+                                        nakl.Type = NaklType.Empty;
+                                        continue;
+                                    case "Господарські витрати":
+                                        nakl.Type = NaklType.Gosp;
+                                        continue;
+                                    case "Повернення покупців":
+                                        nakl.Type = NaklType.Povern;
+                                        continue;
                                     case "Внутрішній прихід":
                                         nakl.Type = NaklType.VnPr;
-                                        //ListNakladna.Add(nakl);
-                                        break;
+                                        continue;
                                     case "Прихід від постачальника":
                                         //Приходи обробляються через Discharge
                                         nakl.Type = NaklType.Post;
-                                        break;
+                                        continue;
                                     default:
                                         nakl.Type = NaklType.Empty;
-                                        break;
+                                        continue;
                                 }
-                                //Покищо додаю тільки розхідні
-                                //ListNakladna.Add(nakl);
+                                ListNakladna.Add(nakl);
                             }
                         }
                         else
@@ -179,6 +202,7 @@ namespace WMS_Monitor
                             this.Invoke(new Action(() =>
                             {
                                 komirka.Text.Visible = false;
+                                komirka.Text.ForeColor = Color.Black;
                                 komirka.Number.BackColor = Color.White;
                                 //komirka.Picture.Visible = false;
                             }));
@@ -215,12 +239,31 @@ namespace WMS_Monitor
                             this.Invoke(new Action(() =>
                             {
                                 komirka.Text.Visible = false;
+                                komirka.Text.ForeColor = Color.Black;
                                 komirka.Number.BackColor = Color.White;
                             }));
                             ListDischarge.Remove(nakl);
                         }
                     }
                     newListDischarge.Clear();
+
+                    reader.NextResult();
+                    while (reader.Read())
+                    {
+                        var coden = Convert.ToInt32(reader["coden"]);
+                        var nakl = ErrorNakladna.FirstOrDefault(n => n.Coden == coden);
+                        if (nakl == null)
+                        {
+                            nakl = new NakladnaWMS
+                            {
+                                Coden = coden,
+                                Text = Convert.ToString(reader["error"]),
+                                DateOpen = Convert.ToDateTime(reader["date_log"])
+                            };
+                            if ((DateTime.Now - nakl.DateOpen).TotalHours > 11) continue;
+                            ErrorNakladna.Add(nakl);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -274,19 +317,20 @@ namespace WMS_Monitor
                         {
                             komirka.Text.BackColor = Color.DarkGray;
                         }));
-                    this.Invoke(new Action(() =>
-                        {
-                            if (!nakl.Sound && nakl.PlaceWMS == "ENT.59")
+                    if (!_operatorMode)
+                        this.Invoke(new Action(() =>
                             {
-                                (new SoundPlayer("59.wav")).Play();
-                                nakl.Sound = true;
-                            }
-                            if (!nakl.Sound && nakl.PlaceWMS == "ENT.58")
-                            {
-                                (new SoundPlayer("58.wav")).Play();
-                                nakl.Sound = true;
-                            }
-                        }));
+                                if (!nakl.Sound && nakl.PlaceWMS == "ENT.59")
+                                {
+                                    (new SoundPlayer("59.wav")).Play();
+                                    nakl.Sound = true;
+                                }
+                                if (!nakl.Sound && nakl.PlaceWMS == "ENT.58")
+                                {
+                                    (new SoundPlayer("58.wav")).Play();
+                                    nakl.Sound = true;
+                                }
+                            }));
                 }
             }
         }
@@ -332,6 +376,7 @@ namespace WMS_Monitor
                     this.Invoke(new Action(() =>
                     {
                         komirka.Text.BackColor = Color.White;
+                        komirka.Text.ForeColor = Color.Black;
                     }));
 
                 if (nakl.PlaceWMS == "ENT.MP" || nakl.PlaceWMS == "ENT.CM1" || nakl.PlaceWMS == "ENT.CM2" || nakl.PlaceWMS == "ENT.CM3" || nakl.Type == NaklType.Post || nakl.Type == NaklType.Filii)
@@ -368,6 +413,7 @@ namespace WMS_Monitor
                         //komirka.Picture.BackColor = Color.FromArgb(0, 255, 0);
                         komirka.Number.BackColor = Color.FromArgb(0, 255, 0);
                         komirka.Text.BackColor = Color.FromArgb(0, 255, 0);
+                        komirka.Text.ForeColor = Color.Black;
                     }));
                 else
                 {
@@ -377,18 +423,20 @@ namespace WMS_Monitor
                             //komirka.Picture.BackColor = Color.FromArgb(255, 255, 0);
                             komirka.Number.BackColor = Color.FromArgb(255, 255, 0);
                             komirka.Text.BackColor = Color.FromArgb(255, 255, 0);
+                            komirka.Text.ForeColor = Color.Black;
                         }));
                     else
                         this.Invoke(new Action(() =>
                         {
-                            //komirka.Picture.BackColor = Color.FromArgb(255, 0, 0);
                             komirka.Number.BackColor = Color.FromArgb(255, 0, 0);
                             komirka.Text.BackColor = Color.FromArgb(255, 0, 0);
-                            if (!nakl.Sound && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
-                            {
-                                (new SoundPlayer("Long.wav")).Play();
-                                nakl.Sound = true;
-                            }
+                            komirka.Text.ForeColor = Color.White;
+                            if (!_operatorMode)
+                                if (!nakl.Sound && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
+                                {
+                                    (new SoundPlayer("Long.wav")).Play();
+                                    nakl.Sound = true;
+                                }
                         }));
                 }
                 //if (waiting > 1.4)
@@ -414,6 +462,23 @@ namespace WMS_Monitor
             }));
         }
 
+        private void ShowErrorNakl()
+        {
+            this.Invoke(new Action(() =>
+            {
+                var grid = ErrorNakladna.Where(n => n.DateOpen > DateTime.Now.AddMinutes(-30)).Select(n => new { Накладна = n.Coden, Час = n.DateOpen.ToString("HH:mm"), Помилка = n.Text.Substring(0, Math.Min(50, n.Text.Length)), }).OrderBy(n => n.Час).ToList();
+                _problemGrid.DataSource = grid;
+                foreach (DataGridViewRow row in _problemGrid.Rows)
+                {
+                    var nakl = ErrorNakladna.Find(n => n.Coden == grid[row.Index].Накладна);
+                    if (nakl.Text != "Немає залишку для товарів")
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
+                }
+                _problemGrid.ClearSelection();
+                _problemGrid.CurrentCell = null;
+            }));
+        }
+
         private void ShowDouble()
         {
             var dounleNakl = ListNakladna.GroupBy(n => n.PlaceWMS).Select(g => new { Place = g.Key, Count = g.Count() }).Where(g => g.Count > 1).ToList();
@@ -428,6 +493,31 @@ namespace WMS_Monitor
                     }));
                 }
             }
+        }
+
+        private void timerRefresh_Tick(object sender, EventArgs e)
+        {
+            TimeSpan t = DateTime.Now - _startTime;
+            if (t.TotalSeconds > 120)
+            {
+                UpdateMonitor(null);
+                _startTime = DateTime.Now;
+                _bRefresh.Text = "Обновлено";
+            }
+            else
+            {
+                if (t.TotalSeconds < 20)
+                    _bRefresh.Text = "Обновлено";
+                else
+                    _bRefresh.Text = $"Обновити({120 - t.TotalSeconds:N0})";
+            }
+        }
+
+        private void _bRefresh_Click(object sender, EventArgs e)
+        {
+            UpdateMonitor(null);
+            _startTime = DateTime.Now;
+            _bRefresh.Text = "Обновлено";
         }
 
         private void CountShow(PictureBox box, int count)
