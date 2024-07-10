@@ -30,7 +30,7 @@ namespace WMS_Monitor
             InitializeComponent();
             KomirkaInit();
 
-            _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 0, intervalUpdate);
+            _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 3 * intervalUpdate, intervalUpdate);
         }
 
         private void UpdateMonitor(object obj)
@@ -182,7 +182,7 @@ namespace WMS_Monitor
                 nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting15;
 
                 if (nakl.Waiting < 0) nakl.Waiting = 0;
-                if (nakl.Waiting < 0.66)
+                if (nakl.Waiting < 0.4)
                     this.Invoke(new Action(() =>
                     {
                         komirka.Number.BackColor = Color.FromArgb(0, 255, 0);
@@ -220,6 +220,11 @@ namespace WMS_Monitor
                 var naklForm = new NaklForm(nakl);
                 naklForm.Show();
             }
+        }
+
+        private void TabletForm_Load(object sender, EventArgs e)
+        {
+            UpdateMonitor(null);
         }
 
         private void KomirkaInit()
@@ -585,6 +590,5 @@ namespace WMS_Monitor
             //};
             //ListKomirka.Add("EXI.HOL", komirkaHOL);
         }
-
     }
 }

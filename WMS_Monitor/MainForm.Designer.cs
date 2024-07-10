@@ -523,6 +523,7 @@ namespace WMS_Monitor
             this._lText36.TabIndex = 152;
             this._lText36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText36.Visible = false;
+            this._lText36.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka36
             // 
@@ -554,6 +555,7 @@ namespace WMS_Monitor
             this._lText35.TabIndex = 149;
             this._lText35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText35.Visible = false;
+            this._lText35.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka35
             // 
@@ -585,6 +587,7 @@ namespace WMS_Monitor
             this._lTextHOL.TabIndex = 146;
             this._lTextHOL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextHOL.Visible = false;
+            this._lTextHOL.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaHOL
             // 
@@ -616,6 +619,7 @@ namespace WMS_Monitor
             this._lTextCM1.TabIndex = 143;
             this._lTextCM1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextCM1.Visible = false;
+            this._lTextCM1.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaCM1
             // 
@@ -647,6 +651,7 @@ namespace WMS_Monitor
             this._lTextCM2.TabIndex = 140;
             this._lTextCM2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextCM2.Visible = false;
+            this._lTextCM2.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaCM2
             // 
@@ -678,6 +683,7 @@ namespace WMS_Monitor
             this._lTextCM3.TabIndex = 137;
             this._lTextCM3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextCM3.Visible = false;
+            this._lTextCM3.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaCM3
             // 
@@ -709,6 +715,7 @@ namespace WMS_Monitor
             this._lTextMP.TabIndex = 134;
             this._lTextMP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextMP.Visible = false;
+            this._lTextMP.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaMP
             // 
@@ -740,6 +747,7 @@ namespace WMS_Monitor
             this._lText24.TabIndex = 131;
             this._lText24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText24.Visible = false;
+            this._lText24.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka24
             // 
@@ -772,6 +780,7 @@ namespace WMS_Monitor
             this._lText25.TabIndex = 128;
             this._lText25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText25.Visible = false;
+            this._lText25.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka25
             // 
@@ -804,6 +813,7 @@ namespace WMS_Monitor
             this._lText26.TabIndex = 125;
             this._lText26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText26.Visible = false;
+            this._lText26.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka26
             // 
@@ -836,6 +846,7 @@ namespace WMS_Monitor
             this._lText27.TabIndex = 122;
             this._lText27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText27.Visible = false;
+            this._lText27.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka27
             // 
@@ -868,6 +879,7 @@ namespace WMS_Monitor
             this._lText31.TabIndex = 119;
             this._lText31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText31.Visible = false;
+            this._lText31.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka31
             // 
@@ -899,6 +911,7 @@ namespace WMS_Monitor
             this._lText32.TabIndex = 116;
             this._lText32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText32.Visible = false;
+            this._lText32.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka32
             // 
@@ -930,6 +943,7 @@ namespace WMS_Monitor
             this._lText101.TabIndex = 113;
             this._lText101.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText101.Visible = false;
+            this._lText101.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka101
             // 
@@ -961,6 +975,7 @@ namespace WMS_Monitor
             this._lText102.TabIndex = 110;
             this._lText102.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText102.Visible = false;
+            this._lText102.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka102
             // 
@@ -992,6 +1007,7 @@ namespace WMS_Monitor
             this._lText33.TabIndex = 107;
             this._lText33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText33.Visible = false;
+            this._lText33.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka33
             // 
@@ -1023,6 +1039,7 @@ namespace WMS_Monitor
             this._lText34.TabIndex = 104;
             this._lText34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText34.Visible = false;
+            this._lText34.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka34
             // 
@@ -1054,6 +1071,7 @@ namespace WMS_Monitor
             this._lText55.TabIndex = 101;
             this._lText55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText55.Visible = false;
+            this._lText55.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka55
             // 
@@ -1085,6 +1103,7 @@ namespace WMS_Monitor
             this._lText56.TabIndex = 98;
             this._lText56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText56.Visible = false;
+            this._lText56.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka56
             // 
@@ -1116,6 +1135,7 @@ namespace WMS_Monitor
             this._lText57.TabIndex = 95;
             this._lText57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText57.Visible = false;
+            this._lText57.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka57
             // 
@@ -1147,6 +1167,7 @@ namespace WMS_Monitor
             this._lText58.TabIndex = 92;
             this._lText58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText58.Visible = false;
+            this._lText58.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka58
             // 
@@ -1178,6 +1199,7 @@ namespace WMS_Monitor
             this._lText59.TabIndex = 89;
             this._lText59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText59.Visible = false;
+            this._lText59.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka59
             // 
@@ -1209,6 +1231,7 @@ namespace WMS_Monitor
             this._lText60.TabIndex = 86;
             this._lText60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText60.Visible = false;
+            this._lText60.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka60
             // 
@@ -1240,6 +1263,7 @@ namespace WMS_Monitor
             this._lText61.TabIndex = 83;
             this._lText61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText61.Visible = false;
+            this._lText61.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka61
             // 
@@ -1271,6 +1295,7 @@ namespace WMS_Monitor
             this._lText62.TabIndex = 80;
             this._lText62.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText62.Visible = false;
+            this._lText62.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka62
             // 
@@ -1302,6 +1327,7 @@ namespace WMS_Monitor
             this._lText15.TabIndex = 77;
             this._lText15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText15.Visible = false;
+            this._lText15.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka15
             // 
@@ -1334,6 +1360,7 @@ namespace WMS_Monitor
             this._lText16.TabIndex = 74;
             this._lText16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText16.Visible = false;
+            this._lText16.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka16
             // 
@@ -1366,6 +1393,7 @@ namespace WMS_Monitor
             this._lText17.TabIndex = 71;
             this._lText17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText17.Visible = false;
+            this._lText17.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka17
             // 
@@ -1398,6 +1426,7 @@ namespace WMS_Monitor
             this._lText18.TabIndex = 68;
             this._lText18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText18.Visible = false;
+            this._lText18.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka18
             // 
@@ -1430,6 +1459,7 @@ namespace WMS_Monitor
             this._lText19.TabIndex = 65;
             this._lText19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText19.Visible = false;
+            this._lText19.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka19
             // 
@@ -1462,6 +1492,7 @@ namespace WMS_Monitor
             this._lText20.TabIndex = 62;
             this._lText20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText20.Visible = false;
+            this._lText20.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka20
             // 
@@ -1494,6 +1525,7 @@ namespace WMS_Monitor
             this._lText21.TabIndex = 59;
             this._lText21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText21.Visible = false;
+            this._lText21.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka21
             // 
@@ -1526,6 +1558,7 @@ namespace WMS_Monitor
             this._lText22.TabIndex = 56;
             this._lText22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText22.Visible = false;
+            this._lText22.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka22
             // 
@@ -1558,6 +1591,7 @@ namespace WMS_Monitor
             this._lText23.TabIndex = 53;
             this._lText23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText23.Visible = false;
+            this._lText23.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka23
             // 
@@ -1590,6 +1624,7 @@ namespace WMS_Monitor
             this._lTextB2.TabIndex = 50;
             this._lTextB2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextB2.Visible = false;
+            this._lTextB2.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaB2
             // 
@@ -1622,6 +1657,7 @@ namespace WMS_Monitor
             this._lTextKIM.TabIndex = 47;
             this._lTextKIM.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextKIM.Visible = false;
+            this._lTextKIM.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaKIM
             // 
@@ -1654,6 +1690,7 @@ namespace WMS_Monitor
             this._lTextLAV.TabIndex = 44;
             this._lTextLAV.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lTextLAV.Visible = false;
+            this._lTextLAV.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirkaLAV
             // 
@@ -1686,6 +1723,7 @@ namespace WMS_Monitor
             this._lText01.TabIndex = 41;
             this._lText01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText01.Visible = false;
+            this._lText01.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka01
             // 
@@ -1718,6 +1756,7 @@ namespace WMS_Monitor
             this._lText02.TabIndex = 38;
             this._lText02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText02.Visible = false;
+            this._lText02.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka02
             // 
@@ -1750,6 +1789,7 @@ namespace WMS_Monitor
             this._lText03.TabIndex = 35;
             this._lText03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText03.Visible = false;
+            this._lText03.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka03
             // 
@@ -1782,6 +1822,7 @@ namespace WMS_Monitor
             this._lText04.TabIndex = 32;
             this._lText04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText04.Visible = false;
+            this._lText04.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka04
             // 
@@ -1814,6 +1855,7 @@ namespace WMS_Monitor
             this._lText05.TabIndex = 29;
             this._lText05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText05.Visible = false;
+            this._lText05.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka05
             // 
@@ -1846,6 +1888,7 @@ namespace WMS_Monitor
             this._lText06.TabIndex = 26;
             this._lText06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText06.Visible = false;
+            this._lText06.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka06
             // 
@@ -1878,6 +1921,7 @@ namespace WMS_Monitor
             this._lText07.TabIndex = 23;
             this._lText07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText07.Visible = false;
+            this._lText07.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka07
             // 
@@ -1910,6 +1954,7 @@ namespace WMS_Monitor
             this._lText08.TabIndex = 20;
             this._lText08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText08.Visible = false;
+            this._lText08.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka08
             // 
@@ -1942,6 +1987,7 @@ namespace WMS_Monitor
             this._lText09.TabIndex = 17;
             this._lText09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText09.Visible = false;
+            this._lText09.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka09
             // 
@@ -1974,6 +2020,7 @@ namespace WMS_Monitor
             this._lText10.TabIndex = 14;
             this._lText10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText10.Visible = false;
+            this._lText10.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka10
             // 
@@ -2006,6 +2053,7 @@ namespace WMS_Monitor
             this._lText11.TabIndex = 11;
             this._lText11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText11.Visible = false;
+            this._lText11.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka11
             // 
@@ -2038,6 +2086,7 @@ namespace WMS_Monitor
             this._lText12.TabIndex = 8;
             this._lText12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText12.Visible = false;
+            this._lText12.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka12
             // 
@@ -2070,6 +2119,7 @@ namespace WMS_Monitor
             this._lText13.TabIndex = 5;
             this._lText13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText13.Visible = false;
+            this._lText13.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka13
             // 
@@ -2102,6 +2152,7 @@ namespace WMS_Monitor
             this._lText14.TabIndex = 2;
             this._lText14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this._lText14.Visible = false;
+            this._lText14.Click += new System.EventHandler(this.Place_Click);
             // 
             // _pbKomirka14
             // 
@@ -2135,6 +2186,7 @@ namespace WMS_Monitor
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainForm";
             this.Text = "МОНІТОР діяльності складу АРС";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

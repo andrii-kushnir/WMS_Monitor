@@ -8,10 +8,12 @@ namespace WMS_Monitor.Model
 {
     public class Tovar
     {
-        public int codetvun { get; set; }
+        //public int codetvun { get; set; }
         public int codetv { get; set; }
         public string nametv { get; set; }
-        public string ov { get; set; }
-        public double kol { get; set; }
+        public double countTovar { get; set; }
+        public string operName { get; set; }
+        public string resName { get; set; }
+        public DateTime dateExec { get; set; }
     }
 }

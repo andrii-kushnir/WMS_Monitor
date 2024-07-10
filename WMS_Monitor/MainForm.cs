@@ -68,7 +68,7 @@ namespace WMS_Monitor
             }
             else
             {
-                _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 0, intervalUpdate);
+                _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 3* intervalUpdate, intervalUpdate);
                 //_timerBlinking = new System.Threading.Timer(new TimerCallback(OnTimerBlink), null, 2000, 300);
             }
         }
@@ -944,6 +944,22 @@ namespace WMS_Monitor
             };
             komirkaHOL.Picture.Image = car;
             ListKomirka.Add("EXI.HOL", komirkaHOL);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            UpdateMonitor(null);
+        }
+
+        private void Place_Click(object sender, EventArgs e)
+        {
+            var place = ListKomirka.FirstOrDefault(k => k.Value.Number == sender || k.Value.Text == sender).Key;
+            var nakl = ListNakladna.LastOrDefault(n => n.PlaceWMS == place);
+            if (nakl != null)
+            {
+                var naklForm = new NaklForm(nakl);
+                naklForm.Show();
+            }
         }
     }
 }

@@ -1118,6 +1118,7 @@ namespace WMS_Monitor
             this.Controls.Add(this._lKomirka05);
             this.Name = "TabletForm";
             this.Text = "TabletForm";
+            this.Load += new System.EventHandler(this.TabletForm_Load);
             this.ResumeLayout(false);
 
         }
