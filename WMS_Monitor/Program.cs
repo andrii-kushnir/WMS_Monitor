@@ -9,6 +9,7 @@ namespace WMS_Monitor
     static class Program
     {
         internal const string connectionSql101 = @"Server=192.168.4.101; Database=erp; uid=КушнірА; pwd=зщшфтв;";
+        internal const string connectionSql101sa = @"Server=192.168.4.101; Database=erp; uid=sa; pwd=Yi*7tg8tc=t?PjM;";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

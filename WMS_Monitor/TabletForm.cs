@@ -214,11 +214,19 @@ namespace WMS_Monitor
         private void Place_Click(object sender, EventArgs e)
         {
             var place = ListKomirka.FirstOrDefault(k => k.Value.Number == sender || k.Value.Text == sender).Key;
-            var nakl = ListNakladna.LastOrDefault(n => n.PlaceWMS == place);
-            if (nakl != null)
+            var nakls = ListNakladna.Where(n => n.PlaceWMS == place).ToList();
+            if (nakls.Count == 0)
+                return;
+            if (nakls.Count == 1)
             {
-                var naklForm = new NaklForm(nakl);
+                var naklForm = new NaklForm(nakls[0]);
                 naklForm.Show();
+            }
+            else
+            {
+                var choiceNakl = new ChoiceNakl(nakls);
+                choiceNakl.Location = Cursor.Position;
+                choiceNakl.Show();
             }
         }
 

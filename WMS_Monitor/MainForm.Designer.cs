@@ -39,6 +39,7 @@ namespace WMS_Monitor
             this._problemGrid = new System.Windows.Forms.DataGridView();
             this._naklGrid = new System.Windows.Forms.DataGridView();
             this._pSklad = new System.Windows.Forms.Panel();
+            this._lTimer = new System.Windows.Forms.Label();
             this._bRefresh = new System.Windows.Forms.Button();
             this._lText36 = new System.Windows.Forms.Label();
             this._pbKomirka36 = new System.Windows.Forms.PictureBox();
@@ -337,9 +338,11 @@ namespace WMS_Monitor
             this._naklGrid.Size = new System.Drawing.Size(700, 679);
             this._naklGrid.TabIndex = 50;
             this._naklGrid.TabStop = false;
+            this._naklGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._naklGrid_CellClick);
             // 
             // _pSklad
             // 
+            this._pSklad.Controls.Add(this._lTimer);
             this._pSklad.Controls.Add(this._bRefresh);
             this._pSklad.Controls.Add(this._lText36);
             this._pSklad.Controls.Add(this._pbKomirka36);
@@ -499,6 +502,17 @@ namespace WMS_Monitor
             this._pSklad.Name = "_pSklad";
             this._pSklad.Size = new System.Drawing.Size(1200, 1041);
             this._pSklad.TabIndex = 0;
+            // 
+            // _lTimer
+            // 
+            this._lTimer.AutoSize = true;
+            this._lTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this._lTimer.Location = new System.Drawing.Point(474, 117);
+            this._lTimer.Name = "_lTimer";
+            this._lTimer.Size = new System.Drawing.Size(244, 73);
+            this._lTimer.TabIndex = 154;
+            this._lTimer.Text = "_lTimer";
+            this._lTimer.Visible = false;
             // 
             // _bRefresh
             // 
@@ -2195,6 +2209,7 @@ namespace WMS_Monitor
             ((System.ComponentModel.ISupportInitialize)(this._problemGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._naklGrid)).EndInit();
             this._pSklad.ResumeLayout(false);
+            this._pSklad.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka36)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirkaHOL)).EndInit();
@@ -2411,6 +2426,7 @@ namespace WMS_Monitor
         private System.Windows.Forms.DataGridView _problemGrid;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button _bRefresh;
+        private System.Windows.Forms.Label _lTimer;
     }
 }
 

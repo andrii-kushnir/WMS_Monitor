@@ -14,8 +14,6 @@ namespace WMS_Monitor
 {
     public partial class NaklForm : Form
     {
-        private const string connectionSql101 = @"Server=192.168.4.101; Database=erp; uid=sa; pwd=Yi*7tg8tc=t?PjM;";
-
         private List<Tovar> ListTovar = new List<Tovar>();
 
         private NakladnaWMS _nakl;
@@ -39,26 +37,23 @@ namespace WMS_Monitor
             _lPlace.Text = _nakl.PlaceERP;
             var timeSpan = DateTime.Now - _nakl.DateOpen;
             var textTimer = (timeSpan.TotalMinutes < 90) ? $"{(int)timeSpan.TotalMinutes}хв" : $"{(int)timeSpan.TotalHours}гд";
-            _lDateCreated.Text = $"{_nakl.DateOpen} ({textTimer})";
+            _lDateCreated.Text = $"{_nakl.DateOpen.ToString("dd.MM.yy HH:mm:ss")} ({textTimer})";
 
-            var listTovar = ListTovar.Select(n => new { Кас_код = n.codetv, Назва_товару = n.nametv, Кільк = n.countTovar, Оператор = n.resName.Length > 20 ? n.resName.Substring(0, 20) : n.resName, Операція = n.dateExec == new DateTime(0001, 01, 01) ? n.operName : "Видано"}).ToList();
-            _dgvTovar.DataSource = listTovar;
+            if (ListTovar.All(t => t.isPause == false))
+                _dgvTovar.DataSource = ListTovar.Select(n => new { Кас_код = n.codetv, Назва_товару = n.nametv, Кільк = n.countTovar, Етап = n.operReal, Оператор = n.resReal.Length > 20 ? n.resReal.Substring(0, 20) : n.resReal, Час_захоплення = n.dateZahopl == DateTime.MinValue ? "" : n.dateZahopl.ToString("HH:mm:ss") }).ToList();
+            else
+                _dgvTovar.DataSource = ListTovar.Select(n => new { Кас_код = n.codetv, Назва_товару = n.nametv, Кільк = n.countTovar, Етап = n.operReal, Оператор = n.resReal.Length > 20 ? n.resReal.Substring(0, 20) : n.resReal, Час_захоплення = n.dateZahopl == DateTime.MinValue ? "" : n.dateZahopl.ToString("HH:mm:ss"), Пауза = n.isPause ? "Так" : "Ні" }).ToList();
 
             foreach (DataGridViewRow row in _dgvTovar.Rows)
             {
                 if (_nakl.Type == NaklType.PokCM || _nakl.Type == NaklType.Zbut || _nakl.Type == NaklType.MP)
                 {
-                    var tovar = ListTovar.Find(n => n.codetv == listTovar[row.Index].Кас_код);
-                    if (listTovar[row.Index].Оператор == "-=Не взято=-")
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
-                    else if (listTovar[row.Index].Операція == "Відвантаження відбір")
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 0);
-                    else if (listTovar[row.Index].Операція == "Контейнер")
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(220, 220, 0);
-                    else if (listTovar[row.Index].Операція == "Відвантаження завершення")
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(100, 200, 0);
-                    else if (listTovar[row.Index].Операція == "Видано")
+                    if (row.Cells[3].Value.ToString() == "Видано" || row.Cells[3].Value.ToString() == "Видано")
                         row.DefaultCellStyle.BackColor = Color.FromArgb(0, 255, 0);
+                    else if (row.Cells[5].Value.ToString() == "")
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
+                    else 
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 0);
                 }
             }
 
@@ -68,7 +63,7 @@ namespace WMS_Monitor
 
         private void LoadNakl(NakladnaWMS nakl)
         {
-            using (var connection = new SqlConnection(connectionSql101))
+            using (var connection = new SqlConnection(Program.connectionSql101sa))
             {
                 string query = $"EXECUTE [us_MonitorNakl] {nakl.Coden}";
                 var command = new SqlCommand(query, connection);
@@ -86,11 +81,14 @@ namespace WMS_Monitor
                             nametv = Convert.ToString(reader["nametv"]),
                             countTovar = Convert.ToDouble(reader["countTovar"]),
                             operName = Convert.ToString(reader["operName"]),
-                            resName = reader["resName"] == System.DBNull.Value ? "-=Не взято=-" : Convert.ToString(reader["resName"]),
-                            dateExec = Convert.ToDateTime(reader["dateExec"])
-                        };
-                        if (tovar.nametv.Length > 44)
-                            tovar.nametv = tovar.nametv.Substring(0, 44);
+                            resName = reader["resName"] == System.DBNull.Value ? null : Convert.ToString(reader["resName"]),
+                            dateExec = Convert.ToDateTime(reader["dateExec"]),
+                            resRozp = reader["resRozp"] == System.DBNull.Value ? null : Convert.ToString(reader["resRozp"]),
+                            dateZahopl = reader["dateZahopl"] == System.DBNull.Value ? DateTime.MinValue :  Convert.ToDateTime(reader["dateZahopl"]),
+                            isPause = reader["isPause"] == System.DBNull.Value ? false : BitConverter.ToBoolean((byte[])reader["isPause"], 0)
+                    };
+                        if (tovar.nametv.Length > 40)
+                            tovar.nametv = tovar.nametv.Substring(0, 40);
                         ListTovar.Add(tovar);
                     }
                 }

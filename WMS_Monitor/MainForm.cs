@@ -29,11 +29,13 @@ namespace WMS_Monitor
         private List<NakladnaWMS> ErrorNakladna = new List<NakladnaWMS>();
 
         private System.Threading.Timer _timer;
-        private const int intervalUpdate = 20 * 1000;
+        private int intervalUpdateMonitor = 60 * 1000;
+        private int intervalUpdateOperator = 120 * 1000;
         private DateTime lastExecute = DateTime.MinValue;
 
-        private System.Windows.Forms.Timer timerRefresh = new System.Windows.Forms.Timer();
-        private DateTime _startTime = DateTime.Now.AddSeconds(-119);
+        private System.Windows.Forms.Timer timerRefreshButton = new System.Windows.Forms.Timer() { Interval = 1000};
+        private System.Windows.Forms.Timer timerRefresh = new System.Windows.Forms.Timer() { Interval = 1000 };
+        private DateTime _startTime;
 
         //private readonly System.Threading.Timer _timerBlinking;
 
@@ -61,16 +63,22 @@ namespace WMS_Monitor
 
             if (_operatorMode)
             {
+                _startTime = DateTime.Now.AddSeconds(1 - (intervalUpdateOperator/1000));
                 _bRefresh.Visible = true;
-                this.timerRefresh.Enabled = true;
-                this.timerRefresh.Interval = 1000;
-                this.timerRefresh.Tick += new System.EventHandler(timerRefresh_Tick);
+                //_lTimer.Visible = false;
+                this.timerRefreshButton.Enabled = true;
+                this.timerRefreshButton.Tick += new System.EventHandler(timerRefreshButton_Tick);
             }
             else
             {
-                _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, 3* intervalUpdate, intervalUpdate);
-                //_timerBlinking = new System.Threading.Timer(new TimerCallback(OnTimerBlink), null, 2000, 300);
+                _startTime = DateTime.Now.AddSeconds(1 - (intervalUpdateMonitor/1000));
+                _bRefresh.Visible = false;
+                //_lTimer.Visible = false;
+                //this.timerRefresh.Enabled = true;
+                //this.timerRefresh.Tick += new System.EventHandler(timerRefresh_Tick);
+                _timer = new System.Threading.Timer(new TimerCallback(UpdateMonitor), null, intervalUpdateMonitor, intervalUpdateMonitor);
             }
+            //_timerBlinking = new System.Threading.Timer(new TimerCallback(OnTimerBlink), null, 2000, 300);
         }
 
         private void UpdateMonitor(object obj)
@@ -80,6 +88,7 @@ namespace WMS_Monitor
             UpdateTimingNakl();
             //ShowDouble();
             ShowErrorNakl();
+            _startTime = DateTime.Now;
         }
 
         private void OnTimerBlink(object obj)
@@ -301,22 +310,22 @@ namespace WMS_Monitor
                 {
                     if (komirka.Text.BackColor != Color.White)
                         this.Invoke(new Action(() =>
-                        {
-                            komirka.Text.BackColor = Color.White;
-                        }));
+                            {
+                                komirka.Text.BackColor = Color.White;
+                            }));
                 }
                 else
                 {
                     if (komirka.Number.BackColor != Color.DarkGray)
                         this.Invoke(new Action(() =>
-                        {
-                            komirka.Number.BackColor = Color.DarkGray;
-                        }));
+                            {
+                                komirka.Number.BackColor = Color.DarkGray;
+                            }));
                     if (komirka.Text.BackColor != Color.DarkGray)
                         this.Invoke(new Action(() =>
-                        {
-                            komirka.Text.BackColor = Color.DarkGray;
-                        }));
+                            {
+                                komirka.Text.BackColor = Color.DarkGray;
+                            }));
                     if (!_operatorMode)
                         this.Invoke(new Action(() =>
                             {
@@ -340,6 +349,8 @@ namespace WMS_Monitor
             ListNakladna = ListNakladna.OrderByDescending(n => n.DateOpen).ToList(); /*.ThenBy(n => n.FirstName)*/
             foreach (var nakl in ListNakladna)
             {
+                if (nakl.Type != NaklType.PokCM && nakl.Type != NaklType.Zbut && nakl.Type != NaklType.MP && ListNakladna.Any(n => n.PlaceWMS == nakl.PlaceWMS && (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP)))
+                    continue;
                 var komirka = ListKomirka[nakl.PlaceWMS];
                 nakl.Timer = DateTime.Now - nakl.DateOpen;
                 var textTimer = (nakl.Timer.TotalMinutes < 100) ? $"{(int)nakl.Timer.TotalMinutes}хв": $"{(int)nakl.Timer.TotalHours}гд";
@@ -348,13 +359,13 @@ namespace WMS_Monitor
                     switch (nakl.Type)
                     {
                         case NaklType.PokCM:
-                            komirka.Text.Text = $"ПокупСМ {nakl.Coden} {textTimer}";
+                            komirka.Text.Text = $"СМ {nakl.Coden} {textTimer}";
                             break;
                         case NaklType.Zbut:
-                            komirka.Text.Text = $"Збут   {nakl.Coden}  {textTimer}";
+                            komirka.Text.Text = $"Зб {nakl.Coden} {textTimer}";
                             break;
                         case NaklType.MP:
-                            komirka.Text.Text = $"ПокупМП {nakl.Coden} {textTimer}";
+                            komirka.Text.Text = $"МП {nakl.Coden} {textTimer}";
                             break;
                         case NaklType.TerCM:
                             komirka.Text.Text = $"ТернСМ {nakl.Coden} {nakl.Timer.ToString(@"hh\:mm")}";
@@ -369,78 +380,141 @@ namespace WMS_Monitor
                 }));
                 if (!komirka.Text.Visible)
                     this.Invoke(new Action(() =>
-                    {
-                        komirka.Text.Visible = true;
-                    }));
+                        {
+                            komirka.Text.Visible = true;
+                        }));
                 if (komirka.Text.BackColor != Color.White)
                     this.Invoke(new Action(() =>
-                    {
-                        komirka.Text.BackColor = Color.White;
-                        komirka.Text.ForeColor = Color.Black;
-                    }));
+                        {
+                            komirka.Text.BackColor = Color.White;
+                            komirka.Text.ForeColor = Color.Black;
+                        }));
 
-                if (nakl.PlaceWMS == "ENT.MP" || nakl.PlaceWMS == "ENT.CM1" || nakl.PlaceWMS == "ENT.CM2" || nakl.PlaceWMS == "ENT.CM3" || nakl.Type == NaklType.Post || nakl.Type == NaklType.Filii)
+                if (nakl.PlaceWMS == "ENT.MP" || nakl.PlaceWMS == "ENT.CM1" || nakl.PlaceWMS == "ENT.CM2" || nakl.PlaceWMS == "ENT.CM3" || nakl.Type == NaklType.Post || nakl.Type == NaklType.Filii || nakl.Type == NaklType.TerCM)
                 {
                     if (komirka.Number.BackColor != Color.White)
                         this.Invoke(new Action(() =>
-                        {
-                            komirka.Number.BackColor = Color.White;
-                        }));
+                            {
+                                komirka.Number.BackColor = Color.White;
+                            }));
                     continue;
                 }
 
-                switch (nakl.Type)
+                bool inWork = false;
+                bool isEnd = false;
+                if (!_operatorMode)
                 {
-                    case NaklType.PokCM:
-                    case NaklType.Zbut:
-                    case NaklType.MP:
-                        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting15;
-                        break;
-                    case NaklType.TerCM:
-                    case NaklType.Filii:
-                        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
-                        break;
-                    case NaklType.Post:
-                        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
-                        break;
-                }
-                if (nakl.Waiting < 0) nakl.Waiting = 0;
-                if (nakl.Waiting < 0.66)
-                    this.Invoke(new Action(() =>
+                    using (var connection = new SqlConnection(Program.connectionSql101sa))
                     {
-                        //int red = (int)(waiting * 255);
-                        //int green = (int)(255 - (waiting * 255));
-                        //komirka.Picture.BackColor = Color.FromArgb(0, 255, 0);
-                        komirka.Number.BackColor = Color.FromArgb(0, 255, 0);
-                        komirka.Text.BackColor = Color.FromArgb(0, 255, 0);
-                        komirka.Text.ForeColor = Color.Black;
-                    }));
-                else
+                        var query = $"EXECUTE [us_MonitorNakl] '{nakl.Coden}'";
+
+                        var command = new SqlCommand(query, connection);
+                        connection.Open();
+                        SqlDataReader reader = null;
+                        try
+                        {
+                            inWork = true;
+                            isEnd = true;
+                            reader = command.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                var operId = Convert.ToInt32(reader["operId"]);
+                                if (operId == 10)
+                                    continue;
+                                else
+                                    isEnd = false;
+                                var resRozp = reader["resRozp"] == System.DBNull.Value ? null : Convert.ToString(reader["resRozp"]);
+                                if (resRozp == null)
+                                    inWork = false;
+                                else
+                                    nakl.Worker = resRozp;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //SaveErrorToSQL(connection, ex.Message, $"codetvun = {codetvun}");
+                        }
+                        finally
+                        {
+                            reader?.Close();
+                        }
+                    }
+                }
+
+                //switch (nakl.Type)
+                //{
+                //    case NaklType.PokCM:
+                //    case NaklType.Zbut:
+                //    case NaklType.MP:
+                //        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting15;
+                //        break;
+                //    case NaklType.TerCM:
+                //    case NaklType.Filii:
+                //        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
+                //        break;
+                //    case NaklType.Post:
+                //        nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting120;
+                //        break;
+                //}
+
+                nakl.Waiting = nakl.Timer.TotalSeconds / timeWaiting15;
+                switch (nakl.Waiting)
                 {
-                    if (nakl.Waiting < 1)
-                        this.Invoke(new Action(() =>
+                    case var _ when (isEnd):
+                        nakl.Color = Color.FromArgb(0, 255, 0);
+                        break;
+                    case var _ when (inWork && nakl.Waiting < 1):
+                        nakl.Color = Color.FromArgb(0, 255, 0);
+                        break;
+                    case var _ when nakl.Waiting < 0.33:
+                        if (_operatorMode)
+                            nakl.Color = Color.FromArgb(0, 255, 0);
+                        else
+                            nakl.Color = Color.FromArgb(255, 255, 0);
+                        break;
+                    case var _ when nakl.Waiting < 0.66:
+                        if (_operatorMode)
+                            nakl.Color = Color.FromArgb(0, 255, 0);
+                        else
                         {
-                            //komirka.Picture.BackColor = Color.FromArgb(255, 255, 0);
-                            komirka.Number.BackColor = Color.FromArgb(255, 255, 0);
-                            komirka.Text.BackColor = Color.FromArgb(255, 255, 0);
-                            komirka.Text.ForeColor = Color.Black;
-                        }));
-                    else
-                        this.Invoke(new Action(() =>
-                        {
-                            komirka.Number.BackColor = Color.FromArgb(255, 0, 0);
-                            komirka.Text.BackColor = Color.FromArgb(255, 0, 0);
-                            komirka.Text.ForeColor = Color.White;
-                            if (!_operatorMode)
-                                if (!nakl.Sound && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
+                            nakl.Color = Color.FromArgb(245, 90, 180);
+                            if (!nakl.Sound5 && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
+                                this.Invoke(new Action(() =>
+                                {
+                                    (new SoundPlayer("NotWork.wav")).Play();
+                                    nakl.Sound5 = true;
+                                }));
+                        }
+                        break;
+                    case var _ when nakl.Waiting < 1:
+                        if (_operatorMode)
+                            nakl.Color = Color.FromArgb(255, 255, 0);
+                        else
+                            nakl.Color = Color.FromArgb(245, 90, 180);
+                        break;
+                    case var _ when nakl.Waiting > 1:
+                        nakl.Color = Color.FromArgb(255, 0, 0);
+                        if (!_operatorMode)
+                            if (!nakl.Sound15 && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
+                                this.Invoke(new Action(() =>
                                 {
                                     (new SoundPlayer("Long.wav")).Play();
-                                    nakl.Sound = true;
-                                }
-                        }));
+                                    nakl.Sound15 = true;
+                                }));
+                        break;
                 }
-                //if (waiting > 1.4)
-                //    komirka.blink = true;
+
+                this.Invoke(new Action(() =>
+                {
+                    komirka.Number.BackColor = nakl.Color;
+                    komirka.Text.BackColor = nakl.Color;
+                    komirka.Text.ForeColor = Color.Black;
+                    if (nakl.Worker != null)
+                    {
+                        komirka.Text.Text += " " + nakl.Worker;  //.Substring(0, Math.Min(7, nakl.Worker.Length));
+                        komirka.Text.Text = komirka.Text.Text.Substring(0, Math.Min(21, komirka.Text.Text.Length));
+                    }
+                }));
             }
 
             this.Invoke(new Action(() =>
@@ -449,13 +523,8 @@ namespace WMS_Monitor
                 _naklGrid.DataSource = grid;
                 foreach (DataGridViewRow row in _naklGrid.Rows)
                 {
-                    var waiting = ListNakladna.Find(n => n.Coden == grid[row.Index].Накладна).Waiting;
-                    if (waiting < 0.66)
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(0, 255, 0);
-                    else if (waiting < 1)
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 0);
-                    else
-                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
+                    var color = ListNakladna.Find(n => n.Coden == grid[row.Index].Накладна).Color;
+                    row.DefaultCellStyle.BackColor = color;
                 }
                 _naklGrid.ClearSelection();
                 _naklGrid.CurrentCell = null;
@@ -466,7 +535,7 @@ namespace WMS_Monitor
         {
             this.Invoke(new Action(() =>
             {
-                var grid = ErrorNakladna.Where(n => n.DateOpen > DateTime.Now.AddMinutes(-30)).Select(n => new { Накладна = n.Coden, Час = n.DateOpen.ToString("HH:mm"), Помилка = n.Text.Substring(0, Math.Min(50, n.Text.Length)), }).OrderBy(n => n.Час).ToList();
+                var grid = ErrorNakladna.Where(n => n.DateOpen > DateTime.Now.AddMinutes(-90) && (n.Text != "Немає залишку для товарів" || n.DateOpen > DateTime.Now.AddMinutes(-30))).Select(n => new { Накладна = n.Coden, Час = n.DateOpen.ToString("HH:mm"), Помилка = n.Text.Substring(0, Math.Min(50, n.Text.Length)), }).OrderBy(n => n.Час).ToList();
                 _problemGrid.DataSource = grid;
                 foreach (DataGridViewRow row in _problemGrid.Rows)
                 {
@@ -488,35 +557,39 @@ namespace WMS_Monitor
                 {
                     var komirka = ListKomirka[group.Place];
                     this.Invoke(new Action(() =>
-                    {
-                        CountShow(komirka.Picture, group.Count);
-                    }));
+                        {
+                            CountShow(komirka.Picture, group.Count);
+                        }));
                 }
+            }
+        }
+
+        private void timerRefreshButton_Tick(object sender, EventArgs e)
+        {
+            TimeSpan t = DateTime.Now - _startTime;
+            if (t.TotalSeconds > intervalUpdateOperator / 1000)
+            {
+                UpdateMonitor(null);
+                _bRefresh.Text = "Обновлено";
+            }
+            else
+            {
+                if (t.TotalSeconds < intervalUpdateOperator / 6000)
+                    _bRefresh.Text = "Обновлено";
+                else
+                    _bRefresh.Text = $"Обновити({(intervalUpdateOperator / 1000) - t.TotalSeconds:N0})";
             }
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
             TimeSpan t = DateTime.Now - _startTime;
-            if (t.TotalSeconds > 120)
-            {
-                UpdateMonitor(null);
-                _startTime = DateTime.Now;
-                _bRefresh.Text = "Обновлено";
-            }
-            else
-            {
-                if (t.TotalSeconds < 20)
-                    _bRefresh.Text = "Обновлено";
-                else
-                    _bRefresh.Text = $"Обновити({120 - t.TotalSeconds:N0})";
-            }
+            _lTimer.Text = $"{(intervalUpdateMonitor / 1000) - t.TotalSeconds:N0}";
         }
 
         private void _bRefresh_Click(object sender, EventArgs e)
         {
             UpdateMonitor(null);
-            _startTime = DateTime.Now;
             _bRefresh.Text = "Обновлено";
         }
 
@@ -527,6 +600,8 @@ namespace WMS_Monitor
                 box.CreateGraphics().DrawString(count.ToString(), myFont, Brushes.White, new Point(16, -4));
             }
         }
+
+
 
         private void KomirkaInit()
         {
@@ -954,7 +1029,25 @@ namespace WMS_Monitor
         private void Place_Click(object sender, EventArgs e)
         {
             var place = ListKomirka.FirstOrDefault(k => k.Value.Number == sender || k.Value.Text == sender).Key;
-            var nakl = ListNakladna.LastOrDefault(n => n.PlaceWMS == place);
+            var nakls = ListNakladna.Where(n => n.PlaceWMS == place).ToList();
+            if (nakls.Count == 0)
+                return;
+            if (nakls.Count == 1)
+            {
+                var naklForm = new NaklForm(nakls[0]);
+                naklForm.Show();
+            }
+            else
+            {
+                var choiceNakl = new ChoiceNakl(nakls);
+                choiceNakl.Location = Cursor.Position;
+                choiceNakl.Show();
+            }
+        }
+
+        private void _naklGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var nakl = ListNakladna.LastOrDefault(n => n.Coden == (int)_naklGrid.Rows[e.RowIndex].Cells[1].Value);
             if (nakl != null)
             {
                 var naklForm = new NaklForm(nakl);
