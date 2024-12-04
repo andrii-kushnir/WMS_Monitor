@@ -102,7 +102,7 @@ namespace WMS_Monitor
             // 
             this._lPlace.AutoSize = true;
             this._lPlace.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lPlace.Location = new System.Drawing.Point(814, 15);
+            this._lPlace.Location = new System.Drawing.Point(857, 15);
             this._lPlace.Name = "_lPlace";
             this._lPlace.Size = new System.Drawing.Size(153, 55);
             this._lPlace.TabIndex = 7;

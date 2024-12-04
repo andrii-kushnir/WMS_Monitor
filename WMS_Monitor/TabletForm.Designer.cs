@@ -48,7 +48,6 @@ namespace WMS_Monitor
             this._lText18 = new System.Windows.Forms.Label();
             this._lText17 = new System.Windows.Forms.Label();
             this._lText16 = new System.Windows.Forms.Label();
-            this._lText62 = new System.Windows.Forms.Label();
             this._lText61 = new System.Windows.Forms.Label();
             this._lText60 = new System.Windows.Forms.Label();
             this._lText59 = new System.Windows.Forms.Label();
@@ -90,7 +89,6 @@ namespace WMS_Monitor
             this._lKomirka18 = new System.Windows.Forms.Label();
             this._lKomirka17 = new System.Windows.Forms.Label();
             this._lKomirka16 = new System.Windows.Forms.Label();
-            this._lKomirka62 = new System.Windows.Forms.Label();
             this._lKomirka61 = new System.Windows.Forms.Label();
             this._lKomirka60 = new System.Windows.Forms.Label();
             this._lKomirka59 = new System.Windows.Forms.Label();
@@ -101,6 +99,8 @@ namespace WMS_Monitor
             this._lKomirka21 = new System.Windows.Forms.Label();
             this._lKomirka20 = new System.Windows.Forms.Label();
             this._lKomirka19 = new System.Windows.Forms.Label();
+            this._lKomirka56 = new System.Windows.Forms.Label();
+            this._lText56 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // _lKomirka01
@@ -350,25 +350,12 @@ namespace WMS_Monitor
             this._lText16.Visible = false;
             this._lText16.Click += new System.EventHandler(this.Place_Click);
             // 
-            // _lText62
-            // 
-            this._lText62.BackColor = System.Drawing.Color.White;
-            this._lText62.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this._lText62.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText62.Location = new System.Drawing.Point(648, 9);
-            this._lText62.Name = "_lText62";
-            this._lText62.Size = new System.Drawing.Size(116, 232);
-            this._lText62.TabIndex = 144;
-            this._lText62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this._lText62.Visible = false;
-            this._lText62.Click += new System.EventHandler(this.Place_Click);
-            // 
             // _lText61
             // 
             this._lText61.BackColor = System.Drawing.Color.White;
             this._lText61.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lText61.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText61.Location = new System.Drawing.Point(525, 9);
+            this._lText61.Location = new System.Drawing.Point(650, 9);
             this._lText61.Name = "_lText61";
             this._lText61.Size = new System.Drawing.Size(116, 232);
             this._lText61.TabIndex = 143;
@@ -381,7 +368,7 @@ namespace WMS_Monitor
             this._lText60.BackColor = System.Drawing.Color.White;
             this._lText60.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lText60.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText60.Location = new System.Drawing.Point(402, 9);
+            this._lText60.Location = new System.Drawing.Point(527, 9);
             this._lText60.Name = "_lText60";
             this._lText60.Size = new System.Drawing.Size(116, 232);
             this._lText60.TabIndex = 142;
@@ -394,7 +381,7 @@ namespace WMS_Monitor
             this._lText59.BackColor = System.Drawing.Color.White;
             this._lText59.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lText59.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText59.Location = new System.Drawing.Point(279, 9);
+            this._lText59.Location = new System.Drawing.Point(404, 9);
             this._lText59.Name = "_lText59";
             this._lText59.Size = new System.Drawing.Size(116, 232);
             this._lText59.TabIndex = 141;
@@ -407,7 +394,7 @@ namespace WMS_Monitor
             this._lText58.BackColor = System.Drawing.Color.White;
             this._lText58.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lText58.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText58.Location = new System.Drawing.Point(156, 9);
+            this._lText58.Location = new System.Drawing.Point(281, 9);
             this._lText58.Name = "_lText58";
             this._lText58.Size = new System.Drawing.Size(116, 232);
             this._lText58.TabIndex = 140;
@@ -420,7 +407,7 @@ namespace WMS_Monitor
             this._lText57.BackColor = System.Drawing.Color.White;
             this._lText57.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lText57.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText57.Location = new System.Drawing.Point(33, 9);
+            this._lText57.Location = new System.Drawing.Point(158, 9);
             this._lText57.Name = "_lText57";
             this._lText57.Size = new System.Drawing.Size(116, 232);
             this._lText57.TabIndex = 139;
@@ -896,25 +883,12 @@ namespace WMS_Monitor
             this._lKomirka16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._lKomirka16.Click += new System.EventHandler(this.Place_Click);
             // 
-            // _lKomirka62
-            // 
-            this._lKomirka62.BackColor = System.Drawing.Color.WhiteSmoke;
-            this._lKomirka62.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this._lKomirka62.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka62.Location = new System.Drawing.Point(648, 243);
-            this._lKomirka62.Name = "_lKomirka62";
-            this._lKomirka62.Size = new System.Drawing.Size(116, 58);
-            this._lKomirka62.TabIndex = 186;
-            this._lKomirka62.Text = "62";
-            this._lKomirka62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this._lKomirka62.Click += new System.EventHandler(this.Place_Click);
-            // 
             // _lKomirka61
             // 
             this._lKomirka61.BackColor = System.Drawing.Color.WhiteSmoke;
             this._lKomirka61.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lKomirka61.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka61.Location = new System.Drawing.Point(525, 243);
+            this._lKomirka61.Location = new System.Drawing.Point(650, 243);
             this._lKomirka61.Name = "_lKomirka61";
             this._lKomirka61.Size = new System.Drawing.Size(116, 58);
             this._lKomirka61.TabIndex = 185;
@@ -927,7 +901,7 @@ namespace WMS_Monitor
             this._lKomirka60.BackColor = System.Drawing.Color.WhiteSmoke;
             this._lKomirka60.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lKomirka60.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka60.Location = new System.Drawing.Point(402, 243);
+            this._lKomirka60.Location = new System.Drawing.Point(527, 243);
             this._lKomirka60.Name = "_lKomirka60";
             this._lKomirka60.Size = new System.Drawing.Size(116, 58);
             this._lKomirka60.TabIndex = 184;
@@ -940,7 +914,7 @@ namespace WMS_Monitor
             this._lKomirka59.BackColor = System.Drawing.Color.WhiteSmoke;
             this._lKomirka59.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lKomirka59.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka59.Location = new System.Drawing.Point(279, 243);
+            this._lKomirka59.Location = new System.Drawing.Point(404, 243);
             this._lKomirka59.Name = "_lKomirka59";
             this._lKomirka59.Size = new System.Drawing.Size(116, 58);
             this._lKomirka59.TabIndex = 183;
@@ -953,7 +927,7 @@ namespace WMS_Monitor
             this._lKomirka58.BackColor = System.Drawing.Color.WhiteSmoke;
             this._lKomirka58.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lKomirka58.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka58.Location = new System.Drawing.Point(156, 243);
+            this._lKomirka58.Location = new System.Drawing.Point(281, 243);
             this._lKomirka58.Name = "_lKomirka58";
             this._lKomirka58.Size = new System.Drawing.Size(116, 58);
             this._lKomirka58.TabIndex = 182;
@@ -966,7 +940,7 @@ namespace WMS_Monitor
             this._lKomirka57.BackColor = System.Drawing.Color.WhiteSmoke;
             this._lKomirka57.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._lKomirka57.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka57.Location = new System.Drawing.Point(33, 243);
+            this._lKomirka57.Location = new System.Drawing.Point(158, 243);
             this._lKomirka57.Name = "_lKomirka57";
             this._lKomirka57.Size = new System.Drawing.Size(116, 58);
             this._lKomirka57.TabIndex = 181;
@@ -1039,16 +1013,41 @@ namespace WMS_Monitor
             this._lKomirka19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._lKomirka19.Click += new System.EventHandler(this.Place_Click);
             // 
+            // _lKomirka56
+            // 
+            this._lKomirka56.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._lKomirka56.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this._lKomirka56.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this._lKomirka56.Location = new System.Drawing.Point(36, 243);
+            this._lKomirka56.Name = "_lKomirka56";
+            this._lKomirka56.Size = new System.Drawing.Size(116, 58);
+            this._lKomirka56.TabIndex = 192;
+            this._lKomirka56.Text = "56";
+            this._lKomirka56.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _lText56
+            // 
+            this._lText56.BackColor = System.Drawing.Color.White;
+            this._lText56.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this._lText56.Font = new System.Drawing.Font("JetBrains Mono", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this._lText56.Location = new System.Drawing.Point(36, 9);
+            this._lText56.Name = "_lText56";
+            this._lText56.Size = new System.Drawing.Size(116, 232);
+            this._lText56.TabIndex = 191;
+            this._lText56.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._lText56.Visible = false;
+            // 
             // TabletForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this._lKomirka56);
+            this.Controls.Add(this._lText56);
             this.Controls.Add(this._lKomirka15);
             this.Controls.Add(this._lKomirka18);
             this.Controls.Add(this._lKomirka17);
             this.Controls.Add(this._lKomirka16);
-            this.Controls.Add(this._lKomirka62);
             this.Controls.Add(this._lKomirka61);
             this.Controls.Add(this._lKomirka60);
             this.Controls.Add(this._lKomirka59);
@@ -1090,7 +1089,6 @@ namespace WMS_Monitor
             this.Controls.Add(this._lText18);
             this.Controls.Add(this._lText17);
             this.Controls.Add(this._lText16);
-            this.Controls.Add(this._lText62);
             this.Controls.Add(this._lText61);
             this.Controls.Add(this._lText60);
             this.Controls.Add(this._lText59);
@@ -1143,7 +1141,6 @@ namespace WMS_Monitor
         private System.Windows.Forms.Label _lText18;
         private System.Windows.Forms.Label _lText17;
         private System.Windows.Forms.Label _lText16;
-        private System.Windows.Forms.Label _lText62;
         private System.Windows.Forms.Label _lText61;
         private System.Windows.Forms.Label _lText60;
         private System.Windows.Forms.Label _lText59;
@@ -1185,7 +1182,6 @@ namespace WMS_Monitor
         private System.Windows.Forms.Label _lKomirka18;
         private System.Windows.Forms.Label _lKomirka17;
         private System.Windows.Forms.Label _lKomirka16;
-        private System.Windows.Forms.Label _lKomirka62;
         private System.Windows.Forms.Label _lKomirka61;
         private System.Windows.Forms.Label _lKomirka60;
         private System.Windows.Forms.Label _lKomirka59;
@@ -1196,5 +1192,7 @@ namespace WMS_Monitor
         private System.Windows.Forms.Label _lKomirka21;
         private System.Windows.Forms.Label _lKomirka20;
         private System.Windows.Forms.Label _lKomirka19;
+        private System.Windows.Forms.Label _lKomirka56;
+        private System.Windows.Forms.Label _lText56;
     }
 }

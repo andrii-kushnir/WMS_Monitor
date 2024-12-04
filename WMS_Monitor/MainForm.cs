@@ -140,6 +140,7 @@ namespace WMS_Monitor
                                 nakl = new NakladnaWMS
                                 {
                                     Coden = coden,
+                                    GuidNakl = (reader["guid"] == System.DBNull.Value) ? coden.ToString() :  Convert.ToString(reader["guid"]),
                                     PlaceWMS = place,
                                     PlaceERP = reader["nameERP"] == System.DBNull.Value ? "Невідомо" : Convert.ToString(reader["nameERP"]),
                                     Text = Convert.ToString(reader["error"]),
@@ -147,6 +148,7 @@ namespace WMS_Monitor
                                     Dostavka = reader["codepdost"] == System.DBNull.Value ? 0 : Convert.ToInt32(reader["codepdost"]),
                                     NameDoc = reader["NameDoc"] == System.DBNull.Value ? "" : Convert.ToString(reader["NameDoc"])
                                 };
+                                if (String.IsNullOrWhiteSpace(nakl.GuidNakl)) nakl.GuidNakl = coden.ToString();
                                 if ((DateTime.Now - nakl.DateOpen).TotalHours > 72) continue;
                                 switch (nakl.NameDoc)
                                 {
@@ -166,12 +168,13 @@ namespace WMS_Monitor
                                     case "Філії":
                                         nakl.Type = NaklType.Filii;
                                         break;
+                                    case "Господарські витрати":
+                                        nakl.Type = NaklType.Gosp;
+                                        nakl.NameDoc = "Господарськ";
+                                        break;
 
                                     case "":
                                         nakl.Type = NaklType.Empty;
-                                        continue;
-                                    case "Господарські витрати":
-                                        nakl.Type = NaklType.Gosp;
                                         continue;
                                     case "Повернення покупців":
                                         nakl.Type = NaklType.Povern;
@@ -192,7 +195,7 @@ namespace WMS_Monitor
                         }
                         else
                         {
-                            //Така накладна вже пішла у ВМС. Що робити поки не знаю, тому ігнорую.
+                            //Така накладна вже є у ВМС. Що робити поки не знаю, тому ігнорую.
                         }
                     }
 
@@ -200,7 +203,8 @@ namespace WMS_Monitor
                     while (reader.Read())
                     {
                         var coden = Convert.ToInt32(reader["coden"]);
-                        var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden);
+                        var guidnakl = Convert.ToString(reader["guid"]);
+                        var nakl = ListNakladna.FirstOrDefault(n => n.GuidNakl == guidnakl);
                         if (nakl != null)
                         {
                             var close = Convert.ToDateTime(reader["datenlog"]);
@@ -216,6 +220,11 @@ namespace WMS_Monitor
                                 //komirka.Picture.Visible = false;
                             }));
                             ListNakladna.Remove(nakl);
+                        }
+                        nakl = ErrorNakladna.FirstOrDefault(n => n.Coden == coden);
+                        if (nakl != null)
+                        {
+                            ErrorNakladna.Remove(nakl);
                         }
                     }
 
@@ -349,7 +358,7 @@ namespace WMS_Monitor
             ListNakladna = ListNakladna.OrderByDescending(n => n.DateOpen).ToList(); /*.ThenBy(n => n.FirstName)*/
             foreach (var nakl in ListNakladna)
             {
-                if (nakl.Type != NaklType.PokCM && nakl.Type != NaklType.Zbut && nakl.Type != NaklType.MP && ListNakladna.Any(n => n.PlaceWMS == nakl.PlaceWMS && (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP)))
+                if (nakl.Type != NaklType.PokCM && nakl.Type != NaklType.Zbut && nakl.Type != NaklType.MP && nakl.Type != NaklType.Gosp && ListNakladna.Any(n => n.PlaceWMS == nakl.PlaceWMS && (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP || n.Type == NaklType.Gosp)))
                     continue;
                 var komirka = ListKomirka[nakl.PlaceWMS];
                 nakl.Timer = DateTime.Now - nakl.DateOpen;
@@ -366,6 +375,9 @@ namespace WMS_Monitor
                             break;
                         case NaklType.MP:
                             komirka.Text.Text = $"МП {nakl.Coden} {textTimer}";
+                            break;
+                        case NaklType.Gosp:
+                            komirka.Text.Text = $"ГВ {nakl.Coden} {textTimer}";
                             break;
                         case NaklType.TerCM:
                             komirka.Text.Text = $"ТернСМ {nakl.Coden} {nakl.Timer.ToString(@"hh\:mm")}";
@@ -406,7 +418,8 @@ namespace WMS_Monitor
                 {
                     using (var connection = new SqlConnection(Program.connectionSql101sa))
                     {
-                        var query = $"EXECUTE [us_MonitorNakl] '{nakl.Coden}'";
+                        //Поміняти на nakl.GuidNakl тут і в SQL коли буду поновляти нову версію усім:
+                        var query = $"EXECUTE [us_MonitorNakl] {nakl.Coden}";
 
                         var command = new SqlCommand(query, connection);
                         connection.Open();
@@ -519,7 +532,7 @@ namespace WMS_Monitor
 
             this.Invoke(new Action(() =>
             {
-                var grid = ListNakladna.Where(n => (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP) && n.PlaceWMS != "ENT.MP").Select(n => new { Тип_документа = n.NameDoc, Накладна = n.Coden, Місце = n.PlaceERP.Substring(0, Math.Min(9, n.PlaceERP.Length)), Час = n.DateOpen.ToString("HH:mm") }).OrderBy(n => n.Час).ToList();
+                var grid = ListNakladna.Where(n => (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP || n.Type == NaklType.Gosp) && n.PlaceWMS != "ENT.MP").Select(n => new { Тип_документа = n.NameDoc, Накладна = n.Coden, Місце = n.PlaceERP.Substring(0, Math.Min(9, n.PlaceERP.Length)), Час = n.DateOpen.ToString("HH:mm") }).OrderBy(n => n.Час).ToList();
                 _naklGrid.DataSource = grid;
                 foreach (DataGridViewRow row in _naklGrid.Rows)
                 {
@@ -929,14 +942,6 @@ namespace WMS_Monitor
             };
             komirka61.Picture.Image = car;
             ListKomirka.Add("ENT.61", komirka61);
-            var komirka62 = new KomirkaVisual()
-            {
-                Number = this._lKomirka62,
-                Picture = this._pbKomirka62,
-                Text = this._lText62
-            };
-            komirka62.Picture.Image = car;
-            ListKomirka.Add("ENT.62", komirka62);
 
             var komirka101 = new KomirkaVisual()
             {

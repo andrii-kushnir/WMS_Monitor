@@ -18,6 +18,7 @@ namespace WMS_Monitor.Model
         public DateTime dateZahopl { get; set; }
         public bool isPause { get; set; }
         public string resRozp { get; set; }
+        public string categor { get; set; }
         public string operReal
         {
             get

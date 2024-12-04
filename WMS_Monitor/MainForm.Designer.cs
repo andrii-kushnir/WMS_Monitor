@@ -113,9 +113,6 @@ namespace WMS_Monitor
             this._lText61 = new System.Windows.Forms.Label();
             this._pbKomirka61 = new System.Windows.Forms.PictureBox();
             this._lKomirka61 = new System.Windows.Forms.Label();
-            this._lText62 = new System.Windows.Forms.Label();
-            this._pbKomirka62 = new System.Windows.Forms.PictureBox();
-            this._lKomirka62 = new System.Windows.Forms.Label();
             this._lText15 = new System.Windows.Forms.Label();
             this._pbKomirka15 = new System.Windows.Forms.PictureBox();
             this._lKomirka15 = new System.Windows.Forms.Label();
@@ -225,7 +222,6 @@ namespace WMS_Monitor
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka59)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka60)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka61)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbKomirka62)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka17)).BeginInit();
@@ -280,9 +276,9 @@ namespace WMS_Monitor
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(3, 695);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(365, 25);
+            this.label1.Size = new System.Drawing.Size(495, 25);
             this.label1.TabIndex = 52;
-            this.label1.Text = "Накладні, які не потрапили у WMS:";
+            this.label1.Text = "Невдалі спроби потрапляння накладних у WMS:";
             // 
             // _problemGrid
             // 
@@ -416,9 +412,6 @@ namespace WMS_Monitor
             this._pSklad.Controls.Add(this._lText61);
             this._pSklad.Controls.Add(this._pbKomirka61);
             this._pSklad.Controls.Add(this._lKomirka61);
-            this._pSklad.Controls.Add(this._lText62);
-            this._pSklad.Controls.Add(this._pbKomirka62);
-            this._pSklad.Controls.Add(this._lKomirka62);
             this._pSklad.Controls.Add(this._lText15);
             this._pSklad.Controls.Add(this._pbKomirka15);
             this._pSklad.Controls.Add(this._lKomirka15);
@@ -1298,38 +1291,6 @@ namespace WMS_Monitor
             this._lKomirka61.TabIndex = 81;
             this._lKomirka61.Text = "61";
             this._lKomirka61.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _lText62
-            // 
-            this._lText62.BackColor = System.Drawing.Color.White;
-            this._lText62.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText62.Location = new System.Drawing.Point(800, 361);
-            this._lText62.Name = "_lText62";
-            this._lText62.Size = new System.Drawing.Size(332, 36);
-            this._lText62.TabIndex = 80;
-            this._lText62.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this._lText62.Visible = false;
-            this._lText62.Click += new System.EventHandler(this.Place_Click);
-            // 
-            // _pbKomirka62
-            // 
-            this._pbKomirka62.Location = new System.Drawing.Point(1061, 361);
-            this._pbKomirka62.Name = "_pbKomirka62";
-            this._pbKomirka62.Size = new System.Drawing.Size(70, 36);
-            this._pbKomirka62.TabIndex = 79;
-            this._pbKomirka62.TabStop = false;
-            this._pbKomirka62.Visible = false;
-            // 
-            // _lKomirka62
-            // 
-            this._lKomirka62.BackColor = System.Drawing.Color.White;
-            this._lKomirka62.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka62.Location = new System.Drawing.Point(1132, 361);
-            this._lKomirka62.Name = "_lKomirka62";
-            this._lKomirka62.Size = new System.Drawing.Size(56, 36);
-            this._lKomirka62.TabIndex = 78;
-            this._lKomirka62.Text = "62";
-            this._lKomirka62.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // _lText15
             // 
@@ -2234,7 +2195,6 @@ namespace WMS_Monitor
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka59)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka60)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka61)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._pbKomirka62)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka17)).EndInit();
@@ -2344,9 +2304,6 @@ namespace WMS_Monitor
         private System.Windows.Forms.Label _lText61;
         private System.Windows.Forms.PictureBox _pbKomirka61;
         private System.Windows.Forms.Label _lKomirka61;
-        private System.Windows.Forms.Label _lText62;
-        private System.Windows.Forms.PictureBox _pbKomirka62;
-        private System.Windows.Forms.Label _lKomirka62;
         private System.Windows.Forms.Label _lText15;
         private System.Windows.Forms.PictureBox _pbKomirka15;
         private System.Windows.Forms.Label _lKomirka15;

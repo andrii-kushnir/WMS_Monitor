@@ -10,6 +10,7 @@ namespace WMS_Monitor.Model
     public class NakladnaWMS
     {
         public int Coden { get; set; }
+        public string GuidNakl { get; set; }
         public string PlaceWMS { get; set; }
         public string PlaceERP { get; set; }
         public string Text { get; set; }

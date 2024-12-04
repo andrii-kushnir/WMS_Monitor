@@ -71,6 +71,7 @@ namespace WMS_Monitor
                                 nakl = new NakladnaWMS
                                 {
                                     Coden = coden,
+                                    GuidNakl = (reader["guid"] == System.DBNull.Value) ? coden.ToString() : Convert.ToString(reader["guid"]),
                                     PlaceWMS = place,
                                     PlaceERP = reader["nameERP"] == System.DBNull.Value ? "Невідомо" : Convert.ToString(reader["nameERP"]),
                                     Text = Convert.ToString(reader["error"]),
@@ -78,12 +79,12 @@ namespace WMS_Monitor
                                     Dostavka = reader["codepdost"] == System.DBNull.Value ? 0 : Convert.ToInt32(reader["codepdost"]),
                                     NameDoc = reader["NameDoc"] == System.DBNull.Value ? "" : Convert.ToString(reader["NameDoc"])
                                 };
+                                if (String.IsNullOrWhiteSpace(nakl.GuidNakl)) nakl.GuidNakl = coden.ToString();
                                 if ((DateTime.Now - nakl.DateOpen).TotalHours > 27) continue;
                                 switch (nakl.NameDoc)
                                 {
                                     case "":
                                     case "Тернопіль СМ":
-                                    case "Господарські витрати":
                                     case "Повернення покупців":
                                     case "Філії":
                                     case "Внутрішній прихід":
@@ -99,6 +100,10 @@ namespace WMS_Monitor
                                     case "Покупець Маркетплейс":
                                         nakl.Type = NaklType.MP;
                                         nakl.NameDoc = "ПокупМП";
+                                        break;
+                                    case "Господарські витрати":
+                                        nakl.Type = NaklType.Gosp;
+                                        nakl.NameDoc = "Господ";
                                         break;
                                     default:
                                         continue;
@@ -116,7 +121,8 @@ namespace WMS_Monitor
                     while (reader.Read())
                     {
                         var coden = Convert.ToInt32(reader["coden"]);
-                        var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden);
+                        var guidnakl = Convert.ToString(reader["guid"]);
+                        var nakl = ListNakladna.FirstOrDefault(n => n.GuidNakl == guidnakl);
                         if (nakl != null)
                         {
                             var close = Convert.ToDateTime(reader["datenlog"]);
@@ -165,6 +171,9 @@ namespace WMS_Monitor
                             break;
                         case NaklType.MP:
                             komirka.Text.Text = $"ПокупМП {nakl.Coden} {textTimer}";
+                            break;
+                        case NaklType.Gosp:
+                            komirka.Text.Text = $"Господ {nakl.Coden} {textTimer}";
                             break;
                     }
                 }));
@@ -477,13 +486,13 @@ namespace WMS_Monitor
             //    Text = this._lText55
             //};
             //ListKomirka.Add("ENT.55", komirka55);
-            //var komirka56 = new KomirkaVisual()
-            //{
-            //    Number = this._lKomirka56,
-            //    Picture = this._pbKomirka56,
-            //    Text = this._lText56
-            //};
-            //ListKomirka.Add("ENT.56", komirka56);
+            var komirka56 = new KomirkaVisual()
+            {
+                Number = this._lKomirka56,
+                //Picture = this._pbKomirka56,
+                Text = this._lText56
+            };
+            ListKomirka.Add("ENT.56", komirka56);
             var komirka57 = new KomirkaVisual()
             {
                 Number = this._lKomirka57,
@@ -518,14 +527,6 @@ namespace WMS_Monitor
                 //Picture = this._pbKomirka61,
                 Text = this._lText61
             };
-            ListKomirka.Add("ENT.61", komirka61);
-            var komirka62 = new KomirkaVisual()
-            {
-                Number = this._lKomirka62,
-                //Picture = this._pbKomirka62,
-                Text = this._lText62
-            };
-            ListKomirka.Add("ENT.62", komirka62);
 
             //var komirka101 = new KomirkaVisual()
             //{
