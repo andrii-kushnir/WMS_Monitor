@@ -527,7 +527,7 @@ namespace WMS_Monitor
                 //Picture = this._pbKomirka61,
                 Text = this._lText61
             };
-
+            ListKomirka.Add("ENT.61", komirka61);
             //var komirka101 = new KomirkaVisual()
             //{
             //    Number = this._lKomirka101,

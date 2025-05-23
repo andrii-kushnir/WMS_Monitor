@@ -1024,6 +1024,7 @@ namespace WMS_Monitor
             this._lKomirka56.TabIndex = 192;
             this._lKomirka56.Text = "56";
             this._lKomirka56.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._lKomirka56.Click += new System.EventHandler(this.Place_Click);
             // 
             // _lText56
             // 
@@ -1036,6 +1037,7 @@ namespace WMS_Monitor
             this._lText56.TabIndex = 191;
             this._lText56.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._lText56.Visible = false;
+            this._lText56.Click += new System.EventHandler(this.Place_Click);
             // 
             // TabletForm
             // 

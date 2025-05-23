@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Media;
@@ -29,8 +30,8 @@ namespace WMS_Monitor
         private List<NakladnaWMS> ErrorNakladna = new List<NakladnaWMS>();
 
         private System.Threading.Timer _timer;
-        private int intervalUpdateMonitor = 60 * 1000;
-        private int intervalUpdateOperator = 120 * 1000;
+        private int intervalUpdateMonitor = 30 * 1000;
+        private int intervalUpdateOperator = 3600 * 1000;
         private DateTime lastExecute = DateTime.MinValue;
 
         private System.Windows.Forms.Timer timerRefreshButton = new System.Windows.Forms.Timer() { Interval = 1000};
@@ -54,6 +55,8 @@ namespace WMS_Monitor
         {
             InitializeComponent();
             KomirkaInit();
+
+            WindowState = FormWindowState.Maximized;
 
             _naklGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             _naklGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -414,8 +417,8 @@ namespace WMS_Monitor
 
                 bool inWork = false;
                 bool isEnd = false;
-                if (!_operatorMode)
-                {
+                //if (!_operatorMode)
+                //{
                     using (var connection = new SqlConnection(Program.connectionSql101sa))
                     {
                         //Поміняти на nakl.GuidNakl тут і в SQL коли буду поновляти нову версію усім:
@@ -452,7 +455,7 @@ namespace WMS_Monitor
                             reader?.Close();
                         }
                     }
-                }
+                //}
 
                 //switch (nakl.Type)
                 //{
@@ -480,29 +483,30 @@ namespace WMS_Monitor
                         nakl.Color = Color.FromArgb(0, 255, 0);
                         break;
                     case var _ when nakl.Waiting < 0.33:
-                        if (_operatorMode)
-                            nakl.Color = Color.FromArgb(0, 255, 0);
-                        else
+                        //if (_operatorMode)
+                        //    nakl.Color = Color.FromArgb(0, 255, 0);
+                        //else
                             nakl.Color = Color.FromArgb(255, 255, 0);
                         break;
                     case var _ when nakl.Waiting < 0.66:
-                        if (_operatorMode)
-                            nakl.Color = Color.FromArgb(0, 255, 0);
-                        else
+                        //if (_operatorMode)
+                        //    nakl.Color = Color.FromArgb(0, 255, 0);
+                        //else
                         {
                             nakl.Color = Color.FromArgb(245, 90, 180);
-                            if (!nakl.Sound5 && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
-                                this.Invoke(new Action(() =>
-                                {
-                                    (new SoundPlayer("NotWork.wav")).Play();
-                                    nakl.Sound5 = true;
-                                }));
+                            if (!_operatorMode)
+                                if (!nakl.Sound5 && (nakl.Type == NaklType.PokCM || nakl.Type == NaklType.Zbut || nakl.Type == NaklType.MP))
+                                    this.Invoke(new Action(() =>
+                                    {
+                                        (new SoundPlayer("NotWork.wav")).Play();
+                                        nakl.Sound5 = true;
+                                    }));
                         }
                         break;
                     case var _ when nakl.Waiting < 1:
-                        if (_operatorMode)
-                            nakl.Color = Color.FromArgb(255, 255, 0);
-                        else
+                        //if (_operatorMode)
+                        //    nakl.Color = Color.FromArgb(255, 255, 0);
+                        //else
                             nakl.Color = Color.FromArgb(245, 90, 180);
                         break;
                     case var _ when nakl.Waiting > 1:
@@ -580,18 +584,20 @@ namespace WMS_Monitor
         private void timerRefreshButton_Tick(object sender, EventArgs e)
         {
             TimeSpan t = DateTime.Now - _startTime;
-            if (t.TotalSeconds > intervalUpdateOperator / 1000)
+            //if (t.TotalSeconds > intervalUpdateOperator / 1000)
+            //{
+            //    UpdateMonitor(null);
+            //    _bRefresh.Text = "Обновлено";
+            //}
+            //else
+            //{
+            if (t.TotalSeconds > 10 && !_bRefresh.Enabled)
             {
-                UpdateMonitor(null);
-                _bRefresh.Text = "Обновлено";
+                _bRefresh.Text = "Обновити";
+                _bRefresh.Enabled = true;
             }
-            else
-            {
-                if (t.TotalSeconds < intervalUpdateOperator / 6000)
-                    _bRefresh.Text = "Обновлено";
-                else
-                    _bRefresh.Text = $"Обновити({(intervalUpdateOperator / 1000) - t.TotalSeconds:N0})";
-            }
+            //_bRefresh.Text = $"Обновити({t.TotalSeconds:N0})";
+            //}
         }
 
         private void timerRefresh_Tick(object sender, EventArgs e)
@@ -604,6 +610,7 @@ namespace WMS_Monitor
         {
             UpdateMonitor(null);
             _bRefresh.Text = "Обновлено";
+            _bRefresh.Enabled = false;
         }
 
         private void CountShow(PictureBox box, int count)
@@ -1058,6 +1065,20 @@ namespace WMS_Monitor
                 var naklForm = new NaklForm(nakl);
                 naklForm.Show();
             }
+        }
+
+        private void вихідToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void інструкціяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "MonitorHelp.txt",
+                UseShellExecute = true // Використання асоціацій системи
+            });
         }
     }
 }

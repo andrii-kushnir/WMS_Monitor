@@ -133,6 +133,9 @@
     <Content Include="Long.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonitorHelp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="NotWork.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

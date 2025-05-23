@@ -29,10 +29,10 @@ namespace WMS_Monitor
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
@@ -191,6 +191,9 @@ namespace WMS_Monitor
             this._lText14 = new System.Windows.Forms.Label();
             this._pbKomirka14 = new System.Windows.Forms.PictureBox();
             this._lKomirka14 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.інструкціяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.вихідToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -248,11 +251,13 @@ namespace WMS_Monitor
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka14)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.ForeColor = System.Drawing.Color.Black;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
@@ -262,19 +267,21 @@ namespace WMS_Monitor
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this._problemGrid);
             this.splitContainer1.Panel1.Controls.Add(this._naklGrid);
+            this.splitContainer1.Panel1.Controls.Add(this.menuStrip1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this._pSklad);
-            this.splitContainer1.Size = new System.Drawing.Size(1904, 1041);
+            this.splitContainer1.Size = new System.Drawing.Size(1904, 1001);
             this.splitContainer1.SplitterDistance = 700;
+            this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(3, 695);
+            this.label1.Location = new System.Drawing.Point(3, 656);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(495, 25);
             this.label1.TabIndex = 52;
@@ -283,55 +290,55 @@ namespace WMS_Monitor
             // _problemGrid
             // 
             this._problemGrid.BackgroundColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this._problemGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this._problemGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this._problemGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this._problemGrid.DefaultCellStyle = dataGridViewCellStyle2;
-            this._problemGrid.Location = new System.Drawing.Point(0, 721);
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this._problemGrid.DefaultCellStyle = dataGridViewCellStyle6;
+            this._problemGrid.Location = new System.Drawing.Point(0, 684);
             this._problemGrid.Name = "_problemGrid";
             this._problemGrid.RowHeadersVisible = false;
-            this._problemGrid.Size = new System.Drawing.Size(697, 320);
+            this._problemGrid.Size = new System.Drawing.Size(700, 317);
             this._problemGrid.TabIndex = 51;
             this._problemGrid.TabStop = false;
             // 
             // _naklGrid
             // 
             this._naklGrid.BackgroundColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this._naklGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this._naklGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this._naklGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("JetBrains Mono Medium", 22F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this._naklGrid.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("JetBrains Mono Medium", 22F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this._naklGrid.DefaultCellStyle = dataGridViewCellStyle8;
             this._naklGrid.Dock = System.Windows.Forms.DockStyle.Top;
-            this._naklGrid.Location = new System.Drawing.Point(0, 0);
+            this._naklGrid.Location = new System.Drawing.Point(0, 24);
             this._naklGrid.Name = "_naklGrid";
             this._naklGrid.RowHeadersVisible = false;
-            this._naklGrid.Size = new System.Drawing.Size(700, 679);
+            this._naklGrid.Size = new System.Drawing.Size(700, 629);
             this._naklGrid.TabIndex = 50;
             this._naklGrid.TabStop = false;
             this._naklGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._naklGrid_CellClick);
@@ -493,7 +500,7 @@ namespace WMS_Monitor
             this._pSklad.Dock = System.Windows.Forms.DockStyle.Fill;
             this._pSklad.Location = new System.Drawing.Point(0, 0);
             this._pSklad.Name = "_pSklad";
-            this._pSklad.Size = new System.Drawing.Size(1200, 1041);
+            this._pSklad.Size = new System.Drawing.Size(1203, 1001);
             this._pSklad.TabIndex = 0;
             // 
             // _lTimer
@@ -588,7 +595,7 @@ namespace WMS_Monitor
             // 
             this._lTextHOL.BackColor = System.Drawing.Color.White;
             this._lTextHOL.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextHOL.Location = new System.Drawing.Point(800, 996);
+            this._lTextHOL.Location = new System.Drawing.Point(800, 949);
             this._lTextHOL.Name = "_lTextHOL";
             this._lTextHOL.Size = new System.Drawing.Size(332, 36);
             this._lTextHOL.TabIndex = 146;
@@ -598,7 +605,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaHOL
             // 
-            this._pbKomirkaHOL.Location = new System.Drawing.Point(1061, 996);
+            this._pbKomirkaHOL.Location = new System.Drawing.Point(1061, 949);
             this._pbKomirkaHOL.Name = "_pbKomirkaHOL";
             this._pbKomirkaHOL.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaHOL.TabIndex = 145;
@@ -609,7 +616,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaHOL.BackColor = System.Drawing.Color.White;
             this._lKomirkaHOL.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaHOL.Location = new System.Drawing.Point(1132, 996);
+            this._lKomirkaHOL.Location = new System.Drawing.Point(1132, 949);
             this._lKomirkaHOL.Name = "_lKomirkaHOL";
             this._lKomirkaHOL.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaHOL.TabIndex = 144;
@@ -620,7 +627,7 @@ namespace WMS_Monitor
             // 
             this._lTextCM1.BackColor = System.Drawing.Color.White;
             this._lTextCM1.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextCM1.Location = new System.Drawing.Point(800, 863);
+            this._lTextCM1.Location = new System.Drawing.Point(800, 816);
             this._lTextCM1.Name = "_lTextCM1";
             this._lTextCM1.Size = new System.Drawing.Size(332, 36);
             this._lTextCM1.TabIndex = 143;
@@ -630,7 +637,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaCM1
             // 
-            this._pbKomirkaCM1.Location = new System.Drawing.Point(1061, 863);
+            this._pbKomirkaCM1.Location = new System.Drawing.Point(1061, 816);
             this._pbKomirkaCM1.Name = "_pbKomirkaCM1";
             this._pbKomirkaCM1.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaCM1.TabIndex = 142;
@@ -641,7 +648,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaCM1.BackColor = System.Drawing.Color.White;
             this._lKomirkaCM1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaCM1.Location = new System.Drawing.Point(1132, 863);
+            this._lKomirkaCM1.Location = new System.Drawing.Point(1132, 816);
             this._lKomirkaCM1.Name = "_lKomirkaCM1";
             this._lKomirkaCM1.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaCM1.TabIndex = 141;
@@ -652,7 +659,7 @@ namespace WMS_Monitor
             // 
             this._lTextCM2.BackColor = System.Drawing.Color.White;
             this._lTextCM2.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextCM2.Location = new System.Drawing.Point(800, 902);
+            this._lTextCM2.Location = new System.Drawing.Point(800, 855);
             this._lTextCM2.Name = "_lTextCM2";
             this._lTextCM2.Size = new System.Drawing.Size(332, 36);
             this._lTextCM2.TabIndex = 140;
@@ -662,7 +669,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaCM2
             // 
-            this._pbKomirkaCM2.Location = new System.Drawing.Point(1061, 902);
+            this._pbKomirkaCM2.Location = new System.Drawing.Point(1061, 855);
             this._pbKomirkaCM2.Name = "_pbKomirkaCM2";
             this._pbKomirkaCM2.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaCM2.TabIndex = 139;
@@ -673,7 +680,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaCM2.BackColor = System.Drawing.Color.White;
             this._lKomirkaCM2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaCM2.Location = new System.Drawing.Point(1132, 902);
+            this._lKomirkaCM2.Location = new System.Drawing.Point(1132, 855);
             this._lKomirkaCM2.Name = "_lKomirkaCM2";
             this._lKomirkaCM2.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaCM2.TabIndex = 138;
@@ -684,7 +691,7 @@ namespace WMS_Monitor
             // 
             this._lTextCM3.BackColor = System.Drawing.Color.White;
             this._lTextCM3.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextCM3.Location = new System.Drawing.Point(800, 941);
+            this._lTextCM3.Location = new System.Drawing.Point(800, 894);
             this._lTextCM3.Name = "_lTextCM3";
             this._lTextCM3.Size = new System.Drawing.Size(332, 36);
             this._lTextCM3.TabIndex = 137;
@@ -694,7 +701,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaCM3
             // 
-            this._pbKomirkaCM3.Location = new System.Drawing.Point(1061, 941);
+            this._pbKomirkaCM3.Location = new System.Drawing.Point(1061, 894);
             this._pbKomirkaCM3.Name = "_pbKomirkaCM3";
             this._pbKomirkaCM3.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaCM3.TabIndex = 136;
@@ -705,7 +712,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaCM3.BackColor = System.Drawing.Color.White;
             this._lKomirkaCM3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaCM3.Location = new System.Drawing.Point(1132, 941);
+            this._lKomirkaCM3.Location = new System.Drawing.Point(1132, 894);
             this._lKomirkaCM3.Name = "_lKomirkaCM3";
             this._lKomirkaCM3.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaCM3.TabIndex = 135;
@@ -716,7 +723,7 @@ namespace WMS_Monitor
             // 
             this._lTextMP.BackColor = System.Drawing.Color.White;
             this._lTextMP.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextMP.Location = new System.Drawing.Point(800, 807);
+            this._lTextMP.Location = new System.Drawing.Point(800, 760);
             this._lTextMP.Name = "_lTextMP";
             this._lTextMP.Size = new System.Drawing.Size(332, 36);
             this._lTextMP.TabIndex = 134;
@@ -726,7 +733,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaMP
             // 
-            this._pbKomirkaMP.Location = new System.Drawing.Point(1061, 807);
+            this._pbKomirkaMP.Location = new System.Drawing.Point(1061, 760);
             this._pbKomirkaMP.Name = "_pbKomirkaMP";
             this._pbKomirkaMP.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaMP.TabIndex = 133;
@@ -737,7 +744,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaMP.BackColor = System.Drawing.Color.White;
             this._lKomirkaMP.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaMP.Location = new System.Drawing.Point(1132, 807);
+            this._lKomirkaMP.Location = new System.Drawing.Point(1132, 760);
             this._lKomirkaMP.Name = "_lKomirkaMP";
             this._lKomirkaMP.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaMP.TabIndex = 132;
@@ -748,7 +755,7 @@ namespace WMS_Monitor
             // 
             this._lText24.BackColor = System.Drawing.Color.White;
             this._lText24.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText24.Location = new System.Drawing.Point(460, 996);
+            this._lText24.Location = new System.Drawing.Point(460, 949);
             this._lText24.Name = "_lText24";
             this._lText24.Size = new System.Drawing.Size(332, 36);
             this._lText24.TabIndex = 131;
@@ -758,7 +765,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka24
             // 
-            this._pbKomirka24.Location = new System.Drawing.Point(464, 996);
+            this._pbKomirka24.Location = new System.Drawing.Point(464, 949);
             this._pbKomirka24.Name = "_pbKomirka24";
             this._pbKomirka24.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -770,7 +777,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka24.BackColor = System.Drawing.Color.White;
             this._lKomirka24.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka24.Location = new System.Drawing.Point(404, 996);
+            this._lKomirka24.Location = new System.Drawing.Point(404, 949);
             this._lKomirka24.Name = "_lKomirka24";
             this._lKomirka24.Size = new System.Drawing.Size(56, 36);
             this._lKomirka24.TabIndex = 129;
@@ -781,7 +788,7 @@ namespace WMS_Monitor
             // 
             this._lText25.BackColor = System.Drawing.Color.White;
             this._lText25.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText25.Location = new System.Drawing.Point(460, 957);
+            this._lText25.Location = new System.Drawing.Point(460, 910);
             this._lText25.Name = "_lText25";
             this._lText25.Size = new System.Drawing.Size(332, 36);
             this._lText25.TabIndex = 128;
@@ -791,7 +798,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka25
             // 
-            this._pbKomirka25.Location = new System.Drawing.Point(464, 957);
+            this._pbKomirka25.Location = new System.Drawing.Point(464, 910);
             this._pbKomirka25.Name = "_pbKomirka25";
             this._pbKomirka25.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -803,7 +810,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka25.BackColor = System.Drawing.Color.White;
             this._lKomirka25.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka25.Location = new System.Drawing.Point(404, 957);
+            this._lKomirka25.Location = new System.Drawing.Point(404, 910);
             this._lKomirka25.Name = "_lKomirka25";
             this._lKomirka25.Size = new System.Drawing.Size(56, 36);
             this._lKomirka25.TabIndex = 126;
@@ -814,7 +821,7 @@ namespace WMS_Monitor
             // 
             this._lText26.BackColor = System.Drawing.Color.White;
             this._lText26.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText26.Location = new System.Drawing.Point(460, 918);
+            this._lText26.Location = new System.Drawing.Point(460, 871);
             this._lText26.Name = "_lText26";
             this._lText26.Size = new System.Drawing.Size(332, 36);
             this._lText26.TabIndex = 125;
@@ -824,7 +831,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka26
             // 
-            this._pbKomirka26.Location = new System.Drawing.Point(464, 918);
+            this._pbKomirka26.Location = new System.Drawing.Point(464, 871);
             this._pbKomirka26.Name = "_pbKomirka26";
             this._pbKomirka26.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -836,7 +843,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka26.BackColor = System.Drawing.Color.White;
             this._lKomirka26.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka26.Location = new System.Drawing.Point(404, 918);
+            this._lKomirka26.Location = new System.Drawing.Point(404, 871);
             this._lKomirka26.Name = "_lKomirka26";
             this._lKomirka26.Size = new System.Drawing.Size(56, 36);
             this._lKomirka26.TabIndex = 123;
@@ -847,7 +854,7 @@ namespace WMS_Monitor
             // 
             this._lText27.BackColor = System.Drawing.Color.White;
             this._lText27.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText27.Location = new System.Drawing.Point(460, 879);
+            this._lText27.Location = new System.Drawing.Point(460, 832);
             this._lText27.Name = "_lText27";
             this._lText27.Size = new System.Drawing.Size(332, 36);
             this._lText27.TabIndex = 122;
@@ -857,7 +864,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka27
             // 
-            this._pbKomirka27.Location = new System.Drawing.Point(464, 879);
+            this._pbKomirka27.Location = new System.Drawing.Point(464, 832);
             this._pbKomirka27.Name = "_pbKomirka27";
             this._pbKomirka27.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -869,7 +876,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka27.BackColor = System.Drawing.Color.White;
             this._lKomirka27.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka27.Location = new System.Drawing.Point(404, 879);
+            this._lKomirka27.Location = new System.Drawing.Point(404, 832);
             this._lKomirka27.Name = "_lKomirka27";
             this._lKomirka27.Size = new System.Drawing.Size(56, 36);
             this._lKomirka27.TabIndex = 120;
@@ -1296,7 +1303,7 @@ namespace WMS_Monitor
             // 
             this._lText15.BackColor = System.Drawing.Color.White;
             this._lText15.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText15.Location = new System.Drawing.Point(800, 409);
+            this._lText15.Location = new System.Drawing.Point(800, 362);
             this._lText15.Name = "_lText15";
             this._lText15.Size = new System.Drawing.Size(332, 36);
             this._lText15.TabIndex = 77;
@@ -1306,7 +1313,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka15
             // 
-            this._pbKomirka15.Location = new System.Drawing.Point(1061, 409);
+            this._pbKomirka15.Location = new System.Drawing.Point(1061, 362);
             this._pbKomirka15.Name = "_pbKomirka15";
             this._pbKomirka15.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1318,7 +1325,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka15.BackColor = System.Drawing.Color.White;
             this._lKomirka15.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka15.Location = new System.Drawing.Point(1132, 409);
+            this._lKomirka15.Location = new System.Drawing.Point(1132, 362);
             this._lKomirka15.Name = "_lKomirka15";
             this._lKomirka15.Size = new System.Drawing.Size(56, 36);
             this._lKomirka15.TabIndex = 75;
@@ -1329,7 +1336,7 @@ namespace WMS_Monitor
             // 
             this._lText16.BackColor = System.Drawing.Color.White;
             this._lText16.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText16.Location = new System.Drawing.Point(800, 448);
+            this._lText16.Location = new System.Drawing.Point(800, 401);
             this._lText16.Name = "_lText16";
             this._lText16.Size = new System.Drawing.Size(332, 36);
             this._lText16.TabIndex = 74;
@@ -1339,7 +1346,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka16
             // 
-            this._pbKomirka16.Location = new System.Drawing.Point(1061, 448);
+            this._pbKomirka16.Location = new System.Drawing.Point(1061, 401);
             this._pbKomirka16.Name = "_pbKomirka16";
             this._pbKomirka16.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1351,7 +1358,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka16.BackColor = System.Drawing.Color.White;
             this._lKomirka16.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka16.Location = new System.Drawing.Point(1132, 448);
+            this._lKomirka16.Location = new System.Drawing.Point(1132, 401);
             this._lKomirka16.Name = "_lKomirka16";
             this._lKomirka16.Size = new System.Drawing.Size(56, 36);
             this._lKomirka16.TabIndex = 72;
@@ -1362,7 +1369,7 @@ namespace WMS_Monitor
             // 
             this._lText17.BackColor = System.Drawing.Color.White;
             this._lText17.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText17.Location = new System.Drawing.Point(800, 487);
+            this._lText17.Location = new System.Drawing.Point(800, 440);
             this._lText17.Name = "_lText17";
             this._lText17.Size = new System.Drawing.Size(332, 36);
             this._lText17.TabIndex = 71;
@@ -1372,7 +1379,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka17
             // 
-            this._pbKomirka17.Location = new System.Drawing.Point(1061, 487);
+            this._pbKomirka17.Location = new System.Drawing.Point(1061, 440);
             this._pbKomirka17.Name = "_pbKomirka17";
             this._pbKomirka17.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1384,7 +1391,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka17.BackColor = System.Drawing.Color.White;
             this._lKomirka17.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka17.Location = new System.Drawing.Point(1132, 487);
+            this._lKomirka17.Location = new System.Drawing.Point(1132, 440);
             this._lKomirka17.Name = "_lKomirka17";
             this._lKomirka17.Size = new System.Drawing.Size(56, 36);
             this._lKomirka17.TabIndex = 69;
@@ -1395,7 +1402,7 @@ namespace WMS_Monitor
             // 
             this._lText18.BackColor = System.Drawing.Color.White;
             this._lText18.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText18.Location = new System.Drawing.Point(800, 526);
+            this._lText18.Location = new System.Drawing.Point(800, 479);
             this._lText18.Name = "_lText18";
             this._lText18.Size = new System.Drawing.Size(332, 36);
             this._lText18.TabIndex = 68;
@@ -1405,7 +1412,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka18
             // 
-            this._pbKomirka18.Location = new System.Drawing.Point(1061, 526);
+            this._pbKomirka18.Location = new System.Drawing.Point(1061, 479);
             this._pbKomirka18.Name = "_pbKomirka18";
             this._pbKomirka18.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1417,7 +1424,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka18.BackColor = System.Drawing.Color.White;
             this._lKomirka18.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka18.Location = new System.Drawing.Point(1132, 526);
+            this._lKomirka18.Location = new System.Drawing.Point(1132, 479);
             this._lKomirka18.Name = "_lKomirka18";
             this._lKomirka18.Size = new System.Drawing.Size(56, 36);
             this._lKomirka18.TabIndex = 66;
@@ -1428,7 +1435,7 @@ namespace WMS_Monitor
             // 
             this._lText19.BackColor = System.Drawing.Color.White;
             this._lText19.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText19.Location = new System.Drawing.Point(800, 565);
+            this._lText19.Location = new System.Drawing.Point(800, 518);
             this._lText19.Name = "_lText19";
             this._lText19.Size = new System.Drawing.Size(332, 36);
             this._lText19.TabIndex = 65;
@@ -1438,7 +1445,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka19
             // 
-            this._pbKomirka19.Location = new System.Drawing.Point(1061, 565);
+            this._pbKomirka19.Location = new System.Drawing.Point(1061, 518);
             this._pbKomirka19.Name = "_pbKomirka19";
             this._pbKomirka19.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1450,7 +1457,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka19.BackColor = System.Drawing.Color.White;
             this._lKomirka19.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka19.Location = new System.Drawing.Point(1132, 565);
+            this._lKomirka19.Location = new System.Drawing.Point(1132, 518);
             this._lKomirka19.Name = "_lKomirka19";
             this._lKomirka19.Size = new System.Drawing.Size(56, 36);
             this._lKomirka19.TabIndex = 63;
@@ -1461,7 +1468,7 @@ namespace WMS_Monitor
             // 
             this._lText20.BackColor = System.Drawing.Color.White;
             this._lText20.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText20.Location = new System.Drawing.Point(800, 604);
+            this._lText20.Location = new System.Drawing.Point(800, 557);
             this._lText20.Name = "_lText20";
             this._lText20.Size = new System.Drawing.Size(332, 36);
             this._lText20.TabIndex = 62;
@@ -1471,7 +1478,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka20
             // 
-            this._pbKomirka20.Location = new System.Drawing.Point(1061, 604);
+            this._pbKomirka20.Location = new System.Drawing.Point(1061, 557);
             this._pbKomirka20.Name = "_pbKomirka20";
             this._pbKomirka20.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1483,7 +1490,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka20.BackColor = System.Drawing.Color.White;
             this._lKomirka20.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka20.Location = new System.Drawing.Point(1132, 604);
+            this._lKomirka20.Location = new System.Drawing.Point(1132, 557);
             this._lKomirka20.Name = "_lKomirka20";
             this._lKomirka20.Size = new System.Drawing.Size(56, 36);
             this._lKomirka20.TabIndex = 60;
@@ -1494,7 +1501,7 @@ namespace WMS_Monitor
             // 
             this._lText21.BackColor = System.Drawing.Color.White;
             this._lText21.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText21.Location = new System.Drawing.Point(800, 643);
+            this._lText21.Location = new System.Drawing.Point(800, 596);
             this._lText21.Name = "_lText21";
             this._lText21.Size = new System.Drawing.Size(332, 36);
             this._lText21.TabIndex = 59;
@@ -1504,7 +1511,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka21
             // 
-            this._pbKomirka21.Location = new System.Drawing.Point(1061, 643);
+            this._pbKomirka21.Location = new System.Drawing.Point(1061, 596);
             this._pbKomirka21.Name = "_pbKomirka21";
             this._pbKomirka21.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1516,7 +1523,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka21.BackColor = System.Drawing.Color.White;
             this._lKomirka21.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka21.Location = new System.Drawing.Point(1132, 643);
+            this._lKomirka21.Location = new System.Drawing.Point(1132, 596);
             this._lKomirka21.Name = "_lKomirka21";
             this._lKomirka21.Size = new System.Drawing.Size(56, 36);
             this._lKomirka21.TabIndex = 57;
@@ -1527,7 +1534,7 @@ namespace WMS_Monitor
             // 
             this._lText22.BackColor = System.Drawing.Color.White;
             this._lText22.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText22.Location = new System.Drawing.Point(800, 682);
+            this._lText22.Location = new System.Drawing.Point(800, 635);
             this._lText22.Name = "_lText22";
             this._lText22.Size = new System.Drawing.Size(332, 36);
             this._lText22.TabIndex = 56;
@@ -1537,7 +1544,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka22
             // 
-            this._pbKomirka22.Location = new System.Drawing.Point(1061, 682);
+            this._pbKomirka22.Location = new System.Drawing.Point(1061, 635);
             this._pbKomirka22.Name = "_pbKomirka22";
             this._pbKomirka22.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1549,7 +1556,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka22.BackColor = System.Drawing.Color.White;
             this._lKomirka22.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka22.Location = new System.Drawing.Point(1132, 682);
+            this._lKomirka22.Location = new System.Drawing.Point(1132, 635);
             this._lKomirka22.Name = "_lKomirka22";
             this._lKomirka22.Size = new System.Drawing.Size(56, 36);
             this._lKomirka22.TabIndex = 54;
@@ -1560,7 +1567,7 @@ namespace WMS_Monitor
             // 
             this._lText23.BackColor = System.Drawing.Color.White;
             this._lText23.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText23.Location = new System.Drawing.Point(800, 721);
+            this._lText23.Location = new System.Drawing.Point(800, 674);
             this._lText23.Name = "_lText23";
             this._lText23.Size = new System.Drawing.Size(332, 36);
             this._lText23.TabIndex = 53;
@@ -1570,7 +1577,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka23
             // 
-            this._pbKomirka23.Location = new System.Drawing.Point(1061, 721);
+            this._pbKomirka23.Location = new System.Drawing.Point(1061, 674);
             this._pbKomirka23.Name = "_pbKomirka23";
             this._pbKomirka23.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1582,7 +1589,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka23.BackColor = System.Drawing.Color.White;
             this._lKomirka23.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka23.Location = new System.Drawing.Point(1132, 721);
+            this._lKomirka23.Location = new System.Drawing.Point(1132, 674);
             this._lKomirka23.Name = "_lKomirka23";
             this._lKomirka23.Size = new System.Drawing.Size(56, 36);
             this._lKomirka23.TabIndex = 51;
@@ -1593,7 +1600,7 @@ namespace WMS_Monitor
             // 
             this._lTextB2.BackColor = System.Drawing.Color.White;
             this._lTextB2.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextB2.Location = new System.Drawing.Point(64, 606);
+            this._lTextB2.Location = new System.Drawing.Point(64, 559);
             this._lTextB2.Name = "_lTextB2";
             this._lTextB2.Size = new System.Drawing.Size(332, 36);
             this._lTextB2.TabIndex = 50;
@@ -1603,7 +1610,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaB2
             // 
-            this._pbKomirkaB2.Location = new System.Drawing.Point(70, 606);
+            this._pbKomirkaB2.Location = new System.Drawing.Point(70, 559);
             this._pbKomirkaB2.Name = "_pbKomirkaB2";
             this._pbKomirkaB2.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaB2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1615,7 +1622,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaB2.BackColor = System.Drawing.Color.White;
             this._lKomirkaB2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaB2.Location = new System.Drawing.Point(8, 606);
+            this._lKomirkaB2.Location = new System.Drawing.Point(8, 559);
             this._lKomirkaB2.Name = "_lKomirkaB2";
             this._lKomirkaB2.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaB2.TabIndex = 48;
@@ -1626,7 +1633,7 @@ namespace WMS_Monitor
             // 
             this._lTextKIM.BackColor = System.Drawing.Color.White;
             this._lTextKIM.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextKIM.Location = new System.Drawing.Point(64, 996);
+            this._lTextKIM.Location = new System.Drawing.Point(64, 949);
             this._lTextKIM.Name = "_lTextKIM";
             this._lTextKIM.Size = new System.Drawing.Size(332, 36);
             this._lTextKIM.TabIndex = 47;
@@ -1636,7 +1643,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaKIM
             // 
-            this._pbKomirkaKIM.Location = new System.Drawing.Point(68, 996);
+            this._pbKomirkaKIM.Location = new System.Drawing.Point(68, 949);
             this._pbKomirkaKIM.Name = "_pbKomirkaKIM";
             this._pbKomirkaKIM.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaKIM.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1648,7 +1655,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaKIM.BackColor = System.Drawing.Color.White;
             this._lKomirkaKIM.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaKIM.Location = new System.Drawing.Point(8, 996);
+            this._lKomirkaKIM.Location = new System.Drawing.Point(8, 949);
             this._lKomirkaKIM.Name = "_lKomirkaKIM";
             this._lKomirkaKIM.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaKIM.TabIndex = 45;
@@ -1659,7 +1666,7 @@ namespace WMS_Monitor
             // 
             this._lTextLAV.BackColor = System.Drawing.Color.White;
             this._lTextLAV.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lTextLAV.Location = new System.Drawing.Point(64, 957);
+            this._lTextLAV.Location = new System.Drawing.Point(64, 910);
             this._lTextLAV.Name = "_lTextLAV";
             this._lTextLAV.Size = new System.Drawing.Size(332, 36);
             this._lTextLAV.TabIndex = 44;
@@ -1669,7 +1676,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirkaLAV
             // 
-            this._pbKomirkaLAV.Location = new System.Drawing.Point(68, 957);
+            this._pbKomirkaLAV.Location = new System.Drawing.Point(68, 910);
             this._pbKomirkaLAV.Name = "_pbKomirkaLAV";
             this._pbKomirkaLAV.Size = new System.Drawing.Size(70, 36);
             this._pbKomirkaLAV.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1681,7 +1688,7 @@ namespace WMS_Monitor
             // 
             this._lKomirkaLAV.BackColor = System.Drawing.Color.White;
             this._lKomirkaLAV.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirkaLAV.Location = new System.Drawing.Point(8, 957);
+            this._lKomirkaLAV.Location = new System.Drawing.Point(8, 910);
             this._lKomirkaLAV.Name = "_lKomirkaLAV";
             this._lKomirkaLAV.Size = new System.Drawing.Size(56, 36);
             this._lKomirkaLAV.TabIndex = 42;
@@ -1692,7 +1699,7 @@ namespace WMS_Monitor
             // 
             this._lText01.BackColor = System.Drawing.Color.White;
             this._lText01.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText01.Location = new System.Drawing.Point(64, 918);
+            this._lText01.Location = new System.Drawing.Point(64, 871);
             this._lText01.Name = "_lText01";
             this._lText01.Size = new System.Drawing.Size(332, 36);
             this._lText01.TabIndex = 41;
@@ -1702,7 +1709,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka01
             // 
-            this._pbKomirka01.Location = new System.Drawing.Point(70, 918);
+            this._pbKomirka01.Location = new System.Drawing.Point(70, 871);
             this._pbKomirka01.Name = "_pbKomirka01";
             this._pbKomirka01.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1714,7 +1721,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka01.BackColor = System.Drawing.Color.White;
             this._lKomirka01.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka01.Location = new System.Drawing.Point(8, 918);
+            this._lKomirka01.Location = new System.Drawing.Point(8, 871);
             this._lKomirka01.Name = "_lKomirka01";
             this._lKomirka01.Size = new System.Drawing.Size(56, 36);
             this._lKomirka01.TabIndex = 39;
@@ -1725,7 +1732,7 @@ namespace WMS_Monitor
             // 
             this._lText02.BackColor = System.Drawing.Color.White;
             this._lText02.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText02.Location = new System.Drawing.Point(64, 879);
+            this._lText02.Location = new System.Drawing.Point(64, 832);
             this._lText02.Name = "_lText02";
             this._lText02.Size = new System.Drawing.Size(332, 36);
             this._lText02.TabIndex = 38;
@@ -1735,7 +1742,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka02
             // 
-            this._pbKomirka02.Location = new System.Drawing.Point(70, 879);
+            this._pbKomirka02.Location = new System.Drawing.Point(70, 832);
             this._pbKomirka02.Name = "_pbKomirka02";
             this._pbKomirka02.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka02.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1747,7 +1754,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka02.BackColor = System.Drawing.Color.White;
             this._lKomirka02.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka02.Location = new System.Drawing.Point(8, 879);
+            this._lKomirka02.Location = new System.Drawing.Point(8, 832);
             this._lKomirka02.Name = "_lKomirka02";
             this._lKomirka02.Size = new System.Drawing.Size(56, 36);
             this._lKomirka02.TabIndex = 36;
@@ -1758,7 +1765,7 @@ namespace WMS_Monitor
             // 
             this._lText03.BackColor = System.Drawing.Color.White;
             this._lText03.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText03.Location = new System.Drawing.Point(64, 840);
+            this._lText03.Location = new System.Drawing.Point(64, 793);
             this._lText03.Name = "_lText03";
             this._lText03.Size = new System.Drawing.Size(332, 36);
             this._lText03.TabIndex = 35;
@@ -1768,7 +1775,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka03
             // 
-            this._pbKomirka03.Location = new System.Drawing.Point(70, 840);
+            this._pbKomirka03.Location = new System.Drawing.Point(70, 793);
             this._pbKomirka03.Name = "_pbKomirka03";
             this._pbKomirka03.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka03.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1780,7 +1787,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka03.BackColor = System.Drawing.Color.White;
             this._lKomirka03.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka03.Location = new System.Drawing.Point(8, 840);
+            this._lKomirka03.Location = new System.Drawing.Point(8, 793);
             this._lKomirka03.Name = "_lKomirka03";
             this._lKomirka03.Size = new System.Drawing.Size(56, 36);
             this._lKomirka03.TabIndex = 33;
@@ -1791,7 +1798,7 @@ namespace WMS_Monitor
             // 
             this._lText04.BackColor = System.Drawing.Color.White;
             this._lText04.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText04.Location = new System.Drawing.Point(64, 801);
+            this._lText04.Location = new System.Drawing.Point(64, 754);
             this._lText04.Name = "_lText04";
             this._lText04.Size = new System.Drawing.Size(332, 36);
             this._lText04.TabIndex = 32;
@@ -1801,7 +1808,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka04
             // 
-            this._pbKomirka04.Location = new System.Drawing.Point(70, 801);
+            this._pbKomirka04.Location = new System.Drawing.Point(70, 754);
             this._pbKomirka04.Name = "_pbKomirka04";
             this._pbKomirka04.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka04.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1813,7 +1820,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka04.BackColor = System.Drawing.Color.White;
             this._lKomirka04.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka04.Location = new System.Drawing.Point(8, 801);
+            this._lKomirka04.Location = new System.Drawing.Point(8, 754);
             this._lKomirka04.Name = "_lKomirka04";
             this._lKomirka04.Size = new System.Drawing.Size(56, 36);
             this._lKomirka04.TabIndex = 30;
@@ -1824,7 +1831,7 @@ namespace WMS_Monitor
             // 
             this._lText05.BackColor = System.Drawing.Color.White;
             this._lText05.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText05.Location = new System.Drawing.Point(64, 762);
+            this._lText05.Location = new System.Drawing.Point(64, 715);
             this._lText05.Name = "_lText05";
             this._lText05.Size = new System.Drawing.Size(332, 36);
             this._lText05.TabIndex = 29;
@@ -1834,7 +1841,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka05
             // 
-            this._pbKomirka05.Location = new System.Drawing.Point(70, 762);
+            this._pbKomirka05.Location = new System.Drawing.Point(70, 715);
             this._pbKomirka05.Name = "_pbKomirka05";
             this._pbKomirka05.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka05.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1846,7 +1853,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka05.BackColor = System.Drawing.Color.White;
             this._lKomirka05.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka05.Location = new System.Drawing.Point(8, 762);
+            this._lKomirka05.Location = new System.Drawing.Point(8, 715);
             this._lKomirka05.Name = "_lKomirka05";
             this._lKomirka05.Size = new System.Drawing.Size(56, 36);
             this._lKomirka05.TabIndex = 27;
@@ -1857,7 +1864,7 @@ namespace WMS_Monitor
             // 
             this._lText06.BackColor = System.Drawing.Color.White;
             this._lText06.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText06.Location = new System.Drawing.Point(64, 723);
+            this._lText06.Location = new System.Drawing.Point(64, 676);
             this._lText06.Name = "_lText06";
             this._lText06.Size = new System.Drawing.Size(332, 36);
             this._lText06.TabIndex = 26;
@@ -1867,7 +1874,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka06
             // 
-            this._pbKomirka06.Location = new System.Drawing.Point(70, 723);
+            this._pbKomirka06.Location = new System.Drawing.Point(70, 676);
             this._pbKomirka06.Name = "_pbKomirka06";
             this._pbKomirka06.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka06.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1879,7 +1886,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka06.BackColor = System.Drawing.Color.White;
             this._lKomirka06.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka06.Location = new System.Drawing.Point(8, 723);
+            this._lKomirka06.Location = new System.Drawing.Point(8, 676);
             this._lKomirka06.Name = "_lKomirka06";
             this._lKomirka06.Size = new System.Drawing.Size(56, 36);
             this._lKomirka06.TabIndex = 24;
@@ -1890,7 +1897,7 @@ namespace WMS_Monitor
             // 
             this._lText07.BackColor = System.Drawing.Color.White;
             this._lText07.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText07.Location = new System.Drawing.Point(64, 684);
+            this._lText07.Location = new System.Drawing.Point(64, 637);
             this._lText07.Name = "_lText07";
             this._lText07.Size = new System.Drawing.Size(332, 36);
             this._lText07.TabIndex = 23;
@@ -1900,7 +1907,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka07
             // 
-            this._pbKomirka07.Location = new System.Drawing.Point(70, 684);
+            this._pbKomirka07.Location = new System.Drawing.Point(70, 637);
             this._pbKomirka07.Name = "_pbKomirka07";
             this._pbKomirka07.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka07.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1912,7 +1919,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka07.BackColor = System.Drawing.Color.White;
             this._lKomirka07.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka07.Location = new System.Drawing.Point(8, 684);
+            this._lKomirka07.Location = new System.Drawing.Point(8, 637);
             this._lKomirka07.Name = "_lKomirka07";
             this._lKomirka07.Size = new System.Drawing.Size(56, 36);
             this._lKomirka07.TabIndex = 21;
@@ -1923,7 +1930,7 @@ namespace WMS_Monitor
             // 
             this._lText08.BackColor = System.Drawing.Color.White;
             this._lText08.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText08.Location = new System.Drawing.Point(64, 645);
+            this._lText08.Location = new System.Drawing.Point(64, 598);
             this._lText08.Name = "_lText08";
             this._lText08.Size = new System.Drawing.Size(332, 36);
             this._lText08.TabIndex = 20;
@@ -1933,7 +1940,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka08
             // 
-            this._pbKomirka08.Location = new System.Drawing.Point(70, 645);
+            this._pbKomirka08.Location = new System.Drawing.Point(70, 598);
             this._pbKomirka08.Name = "_pbKomirka08";
             this._pbKomirka08.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka08.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1945,7 +1952,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka08.BackColor = System.Drawing.Color.White;
             this._lKomirka08.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka08.Location = new System.Drawing.Point(8, 645);
+            this._lKomirka08.Location = new System.Drawing.Point(8, 598);
             this._lKomirka08.Name = "_lKomirka08";
             this._lKomirka08.Size = new System.Drawing.Size(56, 36);
             this._lKomirka08.TabIndex = 18;
@@ -1956,7 +1963,7 @@ namespace WMS_Monitor
             // 
             this._lText09.BackColor = System.Drawing.Color.White;
             this._lText09.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText09.Location = new System.Drawing.Point(64, 567);
+            this._lText09.Location = new System.Drawing.Point(64, 520);
             this._lText09.Name = "_lText09";
             this._lText09.Size = new System.Drawing.Size(332, 36);
             this._lText09.TabIndex = 17;
@@ -1966,7 +1973,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka09
             // 
-            this._pbKomirka09.Location = new System.Drawing.Point(70, 567);
+            this._pbKomirka09.Location = new System.Drawing.Point(70, 520);
             this._pbKomirka09.Name = "_pbKomirka09";
             this._pbKomirka09.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka09.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1978,7 +1985,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka09.BackColor = System.Drawing.Color.White;
             this._lKomirka09.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka09.Location = new System.Drawing.Point(8, 567);
+            this._lKomirka09.Location = new System.Drawing.Point(8, 520);
             this._lKomirka09.Name = "_lKomirka09";
             this._lKomirka09.Size = new System.Drawing.Size(56, 36);
             this._lKomirka09.TabIndex = 15;
@@ -1989,7 +1996,7 @@ namespace WMS_Monitor
             // 
             this._lText10.BackColor = System.Drawing.Color.White;
             this._lText10.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText10.Location = new System.Drawing.Point(64, 528);
+            this._lText10.Location = new System.Drawing.Point(64, 481);
             this._lText10.Name = "_lText10";
             this._lText10.Size = new System.Drawing.Size(332, 36);
             this._lText10.TabIndex = 14;
@@ -1999,7 +2006,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka10
             // 
-            this._pbKomirka10.Location = new System.Drawing.Point(70, 528);
+            this._pbKomirka10.Location = new System.Drawing.Point(70, 481);
             this._pbKomirka10.Name = "_pbKomirka10";
             this._pbKomirka10.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2011,7 +2018,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka10.BackColor = System.Drawing.Color.White;
             this._lKomirka10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka10.Location = new System.Drawing.Point(8, 528);
+            this._lKomirka10.Location = new System.Drawing.Point(8, 481);
             this._lKomirka10.Name = "_lKomirka10";
             this._lKomirka10.Size = new System.Drawing.Size(56, 36);
             this._lKomirka10.TabIndex = 12;
@@ -2022,7 +2029,7 @@ namespace WMS_Monitor
             // 
             this._lText11.BackColor = System.Drawing.Color.White;
             this._lText11.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText11.Location = new System.Drawing.Point(64, 489);
+            this._lText11.Location = new System.Drawing.Point(64, 442);
             this._lText11.Name = "_lText11";
             this._lText11.Size = new System.Drawing.Size(332, 36);
             this._lText11.TabIndex = 11;
@@ -2032,7 +2039,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka11
             // 
-            this._pbKomirka11.Location = new System.Drawing.Point(70, 489);
+            this._pbKomirka11.Location = new System.Drawing.Point(70, 442);
             this._pbKomirka11.Name = "_pbKomirka11";
             this._pbKomirka11.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2044,7 +2051,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka11.BackColor = System.Drawing.Color.White;
             this._lKomirka11.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka11.Location = new System.Drawing.Point(8, 489);
+            this._lKomirka11.Location = new System.Drawing.Point(8, 442);
             this._lKomirka11.Name = "_lKomirka11";
             this._lKomirka11.Size = new System.Drawing.Size(56, 36);
             this._lKomirka11.TabIndex = 9;
@@ -2055,7 +2062,7 @@ namespace WMS_Monitor
             // 
             this._lText12.BackColor = System.Drawing.Color.White;
             this._lText12.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText12.Location = new System.Drawing.Point(64, 450);
+            this._lText12.Location = new System.Drawing.Point(64, 403);
             this._lText12.Name = "_lText12";
             this._lText12.Size = new System.Drawing.Size(332, 36);
             this._lText12.TabIndex = 8;
@@ -2065,7 +2072,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka12
             // 
-            this._pbKomirka12.Location = new System.Drawing.Point(70, 450);
+            this._pbKomirka12.Location = new System.Drawing.Point(70, 403);
             this._pbKomirka12.Name = "_pbKomirka12";
             this._pbKomirka12.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2077,7 +2084,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka12.BackColor = System.Drawing.Color.White;
             this._lKomirka12.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka12.Location = new System.Drawing.Point(8, 450);
+            this._lKomirka12.Location = new System.Drawing.Point(8, 403);
             this._lKomirka12.Name = "_lKomirka12";
             this._lKomirka12.Size = new System.Drawing.Size(56, 36);
             this._lKomirka12.TabIndex = 6;
@@ -2088,7 +2095,7 @@ namespace WMS_Monitor
             // 
             this._lText13.BackColor = System.Drawing.Color.White;
             this._lText13.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText13.Location = new System.Drawing.Point(64, 411);
+            this._lText13.Location = new System.Drawing.Point(64, 364);
             this._lText13.Name = "_lText13";
             this._lText13.Size = new System.Drawing.Size(332, 36);
             this._lText13.TabIndex = 5;
@@ -2098,7 +2105,7 @@ namespace WMS_Monitor
             // 
             // _pbKomirka13
             // 
-            this._pbKomirka13.Location = new System.Drawing.Point(70, 411);
+            this._pbKomirka13.Location = new System.Drawing.Point(70, 364);
             this._pbKomirka13.Name = "_pbKomirka13";
             this._pbKomirka13.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2110,7 +2117,7 @@ namespace WMS_Monitor
             // 
             this._lKomirka13.BackColor = System.Drawing.Color.White;
             this._lKomirka13.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka13.Location = new System.Drawing.Point(8, 411);
+            this._lKomirka13.Location = new System.Drawing.Point(8, 364);
             this._lKomirka13.Name = "_lKomirka13";
             this._lKomirka13.Size = new System.Drawing.Size(56, 36);
             this._lKomirka13.TabIndex = 3;
@@ -2121,7 +2128,7 @@ namespace WMS_Monitor
             // 
             this._lText14.BackColor = System.Drawing.Color.White;
             this._lText14.Font = new System.Drawing.Font("JetBrains Mono Medium", 18.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lText14.Location = new System.Drawing.Point(64, 372);
+            this._lText14.Location = new System.Drawing.Point(64, 325);
             this._lText14.Name = "_lText14";
             this._lText14.Size = new System.Drawing.Size(332, 36);
             this._lText14.TabIndex = 2;
@@ -2134,7 +2141,7 @@ namespace WMS_Monitor
             this._pbKomirka14.BackColor = System.Drawing.SystemColors.Control;
             this._pbKomirka14.ErrorImage = null;
             this._pbKomirka14.InitialImage = null;
-            this._pbKomirka14.Location = new System.Drawing.Point(70, 372);
+            this._pbKomirka14.Location = new System.Drawing.Point(70, 325);
             this._pbKomirka14.Name = "_pbKomirka14";
             this._pbKomirka14.Size = new System.Drawing.Size(70, 36);
             this._pbKomirka14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2146,19 +2153,45 @@ namespace WMS_Monitor
             // 
             this._lKomirka14.BackColor = System.Drawing.Color.White;
             this._lKomirka14.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._lKomirka14.Location = new System.Drawing.Point(8, 372);
+            this._lKomirka14.Location = new System.Drawing.Point(8, 325);
             this._lKomirka14.Name = "_lKomirka14";
             this._lKomirka14.Size = new System.Drawing.Size(56, 36);
             this._lKomirka14.TabIndex = 0;
             this._lKomirka14.Text = "14";
             this._lKomirka14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.інструкціяToolStripMenuItem,
+            this.вихідToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(700, 24);
+            this.menuStrip1.TabIndex = 53;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // інструкціяToolStripMenuItem
+            // 
+            this.інструкціяToolStripMenuItem.Name = "інструкціяToolStripMenuItem";
+            this.інструкціяToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.інструкціяToolStripMenuItem.Text = "Інструкція";
+            this.інструкціяToolStripMenuItem.Click += new System.EventHandler(this.інструкціяToolStripMenuItem_Click);
+            // 
+            // вихідToolStripMenuItem
+            // 
+            this.вихідToolStripMenuItem.Name = "вихідToolStripMenuItem";
+            this.вихідToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.вихідToolStripMenuItem.Text = "Вихід";
+            this.вихідToolStripMenuItem.Click += new System.EventHandler(this.вихідToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.ClientSize = new System.Drawing.Size(1904, 1001);
             this.Controls.Add(this.splitContainer1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "МОНІТОР діяльності складу АРС";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -2221,6 +2254,8 @@ namespace WMS_Monitor
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._pbKomirka14)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2384,6 +2419,9 @@ namespace WMS_Monitor
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button _bRefresh;
         private System.Windows.Forms.Label _lTimer;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem інструкціяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem вихідToolStripMenuItem;
     }
 }
 
