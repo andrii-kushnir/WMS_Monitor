@@ -41,7 +41,7 @@ namespace WMS_Monitor
 
         private void UpdateFromBD()
         {
-            using (var connection = new SqlConnection(Program.connectionSql101))
+            using (var connection = new SqlConnection(Program.connectionSql))
             {
                 string query;
                 if (lastExecute == DateTime.MinValue)
@@ -62,7 +62,9 @@ namespace WMS_Monitor
                     while (reader.Read())
                     {
                         var coden = Convert.ToInt32(reader["coden"]);
-                        var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden);
+                        var guidnakl = Convert.ToString(reader["guid"]);
+                        if (String.IsNullOrWhiteSpace(guidnakl)) guidnakl = coden.ToString();
+                        var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden && n.GuidNakl == guidnakl);
                         if (nakl == null)
                         {
                             var place = Convert.ToString(reader["place"]);
@@ -71,7 +73,7 @@ namespace WMS_Monitor
                                 nakl = new NakladnaWMS
                                 {
                                     Coden = coden,
-                                    GuidNakl = (reader["guid"] == System.DBNull.Value) ? coden.ToString() : Convert.ToString(reader["guid"]),
+                                    GuidNakl = guidnakl,
                                     PlaceWMS = place,
                                     PlaceERP = reader["nameERP"] == System.DBNull.Value ? "Невідомо" : Convert.ToString(reader["nameERP"]),
                                     Text = Convert.ToString(reader["error"]),
@@ -79,7 +81,6 @@ namespace WMS_Monitor
                                     Dostavka = reader["codepdost"] == System.DBNull.Value ? 0 : Convert.ToInt32(reader["codepdost"]),
                                     NameDoc = reader["NameDoc"] == System.DBNull.Value ? "" : Convert.ToString(reader["NameDoc"])
                                 };
-                                if (String.IsNullOrWhiteSpace(nakl.GuidNakl)) nakl.GuidNakl = coden.ToString();
                                 if ((DateTime.Now - nakl.DateOpen).TotalHours > 27) continue;
                                 switch (nakl.NameDoc)
                                 {
@@ -139,9 +140,8 @@ namespace WMS_Monitor
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-#warning доробити errors!
                     //SaveErrorToSQL(connection, ex.Message, $"codetvun = {codetvun}");
                 }
                 finally

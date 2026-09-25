@@ -110,7 +110,7 @@ namespace WMS_Monitor
 
         private void UpdateFromBD()
         {
-            using (var connection = new SqlConnection(Program.connectionSql101))
+            using (var connection = new SqlConnection(Program.connectionSql))
             {
                 string query;
                 if (lastExecute == DateTime.MinValue)
@@ -131,8 +131,10 @@ namespace WMS_Monitor
                     while (reader.Read())
                     {
                         var coden = Convert.ToInt32(reader["coden"]);
+                        var guidnakl = Convert.ToString(reader["guid"]);
+                        if (String.IsNullOrWhiteSpace(guidnakl)) guidnakl = coden.ToString();
                         ErrorNakladna.RemoveAll(n => n.Coden == coden);
-                        var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden);
+                        var nakl = ListNakladna.FirstOrDefault(n => n.Coden == coden && n.GuidNakl == guidnakl);
                         if (nakl == null)
                         {
                             var place = Convert.ToString(reader["place"]);
@@ -143,7 +145,7 @@ namespace WMS_Monitor
                                 nakl = new NakladnaWMS
                                 {
                                     Coden = coden,
-                                    GuidNakl = (reader["guid"] == System.DBNull.Value) ? coden.ToString() :  Convert.ToString(reader["guid"]),
+                                    GuidNakl = guidnakl,
                                     PlaceWMS = place,
                                     PlaceERP = reader["nameERP"] == System.DBNull.Value ? "Невідомо" : Convert.ToString(reader["nameERP"]),
                                     Text = Convert.ToString(reader["error"]),
@@ -151,7 +153,6 @@ namespace WMS_Monitor
                                     Dostavka = reader["codepdost"] == System.DBNull.Value ? 0 : Convert.ToInt32(reader["codepdost"]),
                                     NameDoc = reader["NameDoc"] == System.DBNull.Value ? "" : Convert.ToString(reader["NameDoc"])
                                 };
-                                if (String.IsNullOrWhiteSpace(nakl.GuidNakl)) nakl.GuidNakl = coden.ToString();
                                 if ((DateTime.Now - nakl.DateOpen).TotalHours > 72) continue;
                                 switch (nakl.NameDoc)
                                 {
@@ -286,9 +287,8 @@ namespace WMS_Monitor
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-#warning доробити errors!
                     //SaveErrorToSQL(connection, ex.Message, $"codetvun = {codetvun}");
                 }
                 finally
@@ -359,7 +359,7 @@ namespace WMS_Monitor
         private void UpdateTimingNakl()
         {
             ListNakladna = ListNakladna.OrderByDescending(n => n.DateOpen).ToList(); /*.ThenBy(n => n.FirstName)*/
-            foreach (var nakl in ListNakladna)
+            foreach (var nakl in ListNakladna.ToList())
             {
                 if (nakl.Type != NaklType.PokCM && nakl.Type != NaklType.Zbut && nakl.Type != NaklType.MP && nakl.Type != NaklType.Gosp && ListNakladna.Any(n => n.PlaceWMS == nakl.PlaceWMS && (n.Type == NaklType.PokCM || n.Type == NaklType.Zbut || n.Type == NaklType.MP || n.Type == NaklType.Gosp)))
                     continue;
@@ -417,9 +417,10 @@ namespace WMS_Monitor
 
                 bool inWork = false;
                 bool isEnd = false;
+                bool cancelled = false;
                 //if (!_operatorMode)
                 //{
-                    using (var connection = new SqlConnection(Program.connectionSql101sa))
+                    using (var connection = new SqlConnection(Program.connectionSql))
                     {
                         //Поміняти на nakl.GuidNakl тут і в SQL коли буду поновляти нову версію усім:
                         var query = $"EXECUTE [us_MonitorNakl] {nakl.Coden}";
@@ -434,6 +435,12 @@ namespace WMS_Monitor
                             reader = command.ExecuteReader();
                             while (reader.Read())
                             {
+                                if (Convert.ToInt32(reader["is_cancelled"]) == 1)
+                                {
+                                    RemoveNaklFromMonitor(nakl);
+                                    cancelled = true;
+                                    break;
+                                }
                                 var operId = Convert.ToInt32(reader["operId"]);
                                 if (operId == 10)
                                     continue;
@@ -446,7 +453,7 @@ namespace WMS_Monitor
                                     nakl.Worker = resRozp;
                             }
                         }
-                        catch (Exception ex)
+                        catch
                         {
                             //SaveErrorToSQL(connection, ex.Message, $"codetvun = {codetvun}");
                         }
@@ -456,6 +463,8 @@ namespace WMS_Monitor
                         }
                     }
                 //}
+
+                if (cancelled) continue;
 
                 //switch (nakl.Type)
                 //{
@@ -620,7 +629,6 @@ namespace WMS_Monitor
                 box.CreateGraphics().DrawString(count.ToString(), myFont, Brushes.White, new Point(16, -4));
             }
         }
-
 
 
         private void KomirkaInit()
@@ -1070,6 +1078,23 @@ namespace WMS_Monitor
         private void вихідToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void RemoveNaklFromMonitor(NakladnaWMS nakl)
+        {
+            if (ListKomirka.ContainsKey(nakl.PlaceWMS))
+            {
+                var komirka = ListKomirka[nakl.PlaceWMS];
+                this.Invoke(new Action(() =>
+                {
+                    komirka.Text.Visible = false;
+                    komirka.Text.Text = "";
+                    komirka.Text.ForeColor = Color.Black;
+                    komirka.Text.BackColor = Color.White;
+                    komirka.Number.BackColor = Color.White;
+                }));
+            }
+            ListNakladna.Remove(nakl);
         }
 
         private void інструкціяToolStripMenuItem_Click(object sender, EventArgs e)

@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,6 +72,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RayonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RayonForm.Designer.cs">
+      <DependentUpon>RayonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TabletForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +102,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RayonForm.resx">
+      <DependentUpon>RayonForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TabletForm.resx">
       <DependentUpon>TabletForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +144,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonitorHelp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NewOrder.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NotWork.wav">

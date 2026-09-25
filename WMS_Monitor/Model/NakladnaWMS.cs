@@ -10,6 +10,7 @@ namespace WMS_Monitor.Model
     public class NakladnaWMS
     {
         public int Coden { get; set; }
+        public int? Codesk { get; set; }
         public string GuidNakl { get; set; }
         public string PlaceWMS { get; set; }
         public string PlaceERP { get; set; }
@@ -39,6 +40,8 @@ namespace WMS_Monitor.Model
         MP = 6,
         Filii = 7,
         VnPr = 8,
-        Post = 9
+        Post = 9,
+        RayonMarket = 10,
+        RayonCS = 11
     }
 }
